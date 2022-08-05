@@ -1,0 +1,43 @@
+.container{
+    width: 8rem;
+    display: flex; 
+    overflow: hidden;
+    border-radius: 0.3rem;
+
+}
+.movement{
+    display: flex;
+    transform: translateX(0rem);
+}
+.arrow{
+    font-size: 1rem;
+    background-color: transparent;
+    border: none;
+    padding-top: 0.15rem;
+    cursor:pointer;
+}
+.arrow:disabled{
+    visibility: hidden;
+}
+.number{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.8rem;
+    height: 1.5rem;
+    margin-right: 0.1rem;
+    margin-left: 0.1rem;
+    border: none;
+    border-radius: 0.3rem;
+    background-color:#C997C6;
+}
+.number:hover{
+    box-shadow:inset 0px 0px 4px 1px rgb(106 61 90);
+}
+
+.arrowContainer{
+    display: flex;
+    justify-content: center;
+    height: 1.5rem;
+    margin: 2rem 0;
+}

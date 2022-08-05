@@ -29,7 +29,10 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.STRING,
-      defaultValue: 'https://w7.pngwing.com/pngs/637/32/png-transparent-pluto-mickey-mouse-donald-duck-the-walt-disney-company-dog-pattern-hand-painted-cartoon-dog-watercolor-painting-painted-animals.png'
+      defaultValue: 'https://www.pinclipart.com/picdir/big/532-5327559_dachshund-yorkshire-terrier-puppy-bichon-frise-clip-silueta.png'
     }
+  },
+  {
+    timestamps: false
   });
 };

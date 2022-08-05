@@ -28,8 +28,8 @@ module.exports = async (sequelize) => {
       allowNull: false,
     },
     access:{
-      type: DataTypes.ENUM('admin', 'client'),
-      defaultValue: 'client'
+      type: DataTypes.STRING,
+      defaultValue: "client"
     }
   })
   User.beforeCreate(user => {

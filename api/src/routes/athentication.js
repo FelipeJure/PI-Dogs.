@@ -29,7 +29,8 @@ const { User } = require('../../src/db.js');
 // })
 
 // router.post('/register', (req,res)=>{
-//     const { name, email, password } = req.body;
+//     let { name, email, password } = req.body;
+//      email = email.toLowerCase()
 //     User.create({name, email, password})
 //     .then(()=>{
 //         res.json({response: 'User created saccessfully'})

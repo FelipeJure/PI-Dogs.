@@ -5,131 +5,124 @@ const fetch = require('node-fetch');
 const { text } = require('body-parser');
 const { Op } = require('sequelize')
 
-const callAllApiDogs = async () => {
-    let dogs = await fetch('https://api.thedogapi.com/v1/breeds')
-    return dogs = dogs.json()
+const callApiDogs = async () => {
+    try{
+        let dogs = await fetch('https://api.thedogapi.com/v1/breeds')
+        dogs = await dogs.json()
+        dogs = dogs.map(dog => {
+            return dog = {
+                image: dog.image.url,
+                name: dog.name,
+                temperament:dog.temperament,
+                weight:dog.weight.metric,
+                id: dog.id,
+                height: dog.height.metric,
+                life_span: dog.life_span,
+                temperament: dog.temperament?.split(", ")
+            }
+        })
+        return dogs
+    }
+    catch (error){
+        console.log(error)
+        return []
+    }
 }
-const findApiDog = async (name) => {
-    let apiDog = await fetch(`https://api.thedogapi.com/v1/breeds/search?q=${name}`)
-    return apiDog = await apiDog.json()
-}
-const findDbDog = async (name) => {
-    const dbDog = await Dog.findOne ({
-        attributes:['id','name','image','height', 'weight', 'life_span'],
-        where: {
-            name
+const findDbDogs = async () => {
+    try{
+    let dbDog = await Dog.findAll(
+        {
+            include:{
+                model: Temperament,
+                attributes: ['name'],
+                through: {
+                    attributes: []
+                }
+            }
         }
-    }, {
-        include: Temperament
-    })
+    )
+    if(dbDog) {
+        dbDog = dbDog.map(dog => {
+            dog = dog.toJSON()
+            dog.name = dog.name.split(' ')
+            dog.name = dog.name.map(name => {
+                return name = name[0].toUpperCase() + name.substring(1).toLowerCase()
+            })
+            dog.name = dog.name.join(' ')
+            return dog
+        })
+    }
     return dbDog
+    }
+    catch (error){
+        console.log(error)
+        return []
+    }
+}
+const findAllDogs = async () => {
+    try{
+        const apiDogs = await callApiDogs()
+        const dbDogs = await findDbDogs()
+        const allDogs = [...apiDogs,...dbDogs]
+        allDogs.sort((a,b) => {
+            if(a.name>b.name) return 1
+            if(a.name<b.name)return -1
+            else return 0
+        })
+        return allDogs
+    }
+    catch (error){
+        console.log(error)
+    }
 }
 let idValue = 1000
 
 router.get('/', async (req, res) =>{
     const { name } = req.query;
-    if (name){
-        let apiDogs = []
-        let dogs = await fetch(`https://api.thedogapi.com/v1/breeds/search?q=${name}`)
-        dogs = await dogs.json()
-        if (dogs.length){
-            apiDogs = dogs.map(dog => {
-                return dog = {
-                    name: dog.name,
-                    id:dog.id,
-                    temperament: dog.temperament,
-                    life_span: dog.life_span,
-                    weight: dog.weight.metric,
-                    height: dog.height.metric
-                }
-            })
+    try{
+        let dogs = await findAllDogs()
+        if (name){
+            dogs = dogs.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()))
+            if(dogs.length) return res.json(dogs)
+            res.status(404).json({message: 'Dog not found'})
         }
-        let dbDog = await Dog.findAll({
-            attributes:['name', 'image', 'weight', 'id'],
-            where:{
-                name: {
-                    [Op.substring]:name
-                }
-            }
-        },{
-            include: Temperament
-        })
-        if (dbDog.length) {
-            dbDog = dbDog.map(dog => dog.toJSON())
-            if(apiDogs.length) return res.json([...apiDogs,...dbDog])
-            else return res.json(dbDog)
-            }
-        if(apiDogs.length) return res.json(apiDogs)
-        return res.status(404).json({message: 'Dog not found'})
+        return res.json(dogs)
+    } catch(error){
+        console.log(error)
     }
-    let apiDogs = []
-    let createdDogs = []
-    const calledDogs = await callAllDogs()
-    apiDogs = calledDogs.map(dog => {
-        return dog = {
-            image: dog.image.url,
-            name: dog.name,
-            temperament:dog.temperament,
-            weight:dog.weight.metric,
-            id: dog.id
-        }
-    }) 
-    let dbDogs = Dog.findAll({
-        attributes:['name', 'image', 'weight', 'id']
-    },{
-        include: Temperament
-    })
-    if(dbDogs.length) createdDogs = dbDogs.map (r => r.toJSON());
-    const allDogs = [...apiDogs, ...createdDogs]
-    res.json(allDogs)
 })
 
-router.get('/:raza',async (req,res) => {
-    const { raza } = req.params;
-    const dbDog = findDbDog(raza)
-    if (dbDog) return res.json(dbDog.toJSON())
-    const apiDog = findApiDog(raza)
-    if (apiDog[0]) {
-        apiDog = {
-            id: apiDog[0].id,
-            name: apiDog[0].name,
-            height: apiDog[0].height.metric,
-            weight: apiDog[0].weight.metric,
-            life_span: apiDog[0].life_span,
-            temperament: apiDog[0].temperament
-        }
-        return res.json(apiDog)
-    }
+router.get('/:idRaza',async (req,res) => {
+    const { idRaza } = req.params;
+    let dogs = await findAllDogs()
+    const dog = dogs.find(dog => dog.id === Number(idRaza))
+    if (dog) return res.json(dog)
     return res.status(404).json({message: 'Dog not found'})
 })
 
 router.post('/', async (req,res) =>{
-    const { name, minHeight, maxHeight, minWeight, maxWeight, minLife_span, maxLife_span, image, userId, temperament} = req.body;
+    const { name, minHeight, maxHeight, minWeight, maxWeight, minLife_span, maxLife_span, image, /*userId, */temperament} = req.body;
     try{
-        if (name && minHeight && maxHeight && minWeight && maxWeight && minLife_span && maxLife_span && userId && temperament ){
-            const allApiDogs = await callAllApiDogs()
-            const apiDog = allApiDogs.find(dog => dog.name === name)
-            if (!apiDog){
-                let dogName = name[0].toUpperCase() + name.substring(1).toLowerCase()
-                const dbDog = await findDbDog(dogName)
-                if (!dbDog){
-                    const newDog = await Dog.create({
-                        name: dogName,
-                        id: idValue++,
-                        height: `${minHeight} - ${maxHeight}`,
-                        weight: `${minWeight} - ${maxWeight}`,
-                        life_span: `${minLife_span} - ${maxLife_span}`,
-                        image,
-                        userId
-                    })
-                    await newDog.setTemperaments(temperament)
-                    return res.json({message: `${dogName} was saccesfuly created` })
-                } else {
-                    return res.status(404).json({message: `${dogName} already exist`})
-                }
+        // console.log(req.body)
+        if (name && minHeight && maxHeight && minWeight && maxWeight && minLife_span && maxLife_span /*&& userId*/ && temperament ){
+            let dogs = await findAllDogs()
+            let existName = dogs.find(dog => dog.name.toLowerCase() === name.toLowerCase())
+            if (!existName){
+                return Dog.create({
+                    name: name.toLowerCase(),
+                    id: idValue++,
+                    height: `${minHeight} - ${maxHeight}`,
+                    weight: `${minWeight} - ${maxWeight}`,
+                    life_span: `${minLife_span} - ${maxLife_span} years`,
+                    image: image? image: null,
+                    // userId
+                })
+                .then(dog => {
+                    return dog.setTemperaments(temperament)})
+                .then(()=> res.json({message: 'Dog saccesfully created' }))
             } else {
-                return res.status(404).json({message: `${dogName} already exist`})
-            }
+                return res.status(404).json({message: 'This dog already exist'})
+            } 
         } else {
             res.status(404).json({message: 'Complete all information'})
         }

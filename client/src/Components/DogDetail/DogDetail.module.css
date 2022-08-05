@@ -1,0 +1,29 @@
+.body{
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-attachment: fixed;
+    background-image: url('https://wallpaperstock.net/wallpapers/thumbs1/36803wide.jpg'); 
+}
+.container{
+    height: 80vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.container img{
+    width: 25rem;
+}
+
+.container .description{
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+    color:black;
+}
+
+.container .description h1{
+    text-align: center;
+    font-size: 2rem;
+}

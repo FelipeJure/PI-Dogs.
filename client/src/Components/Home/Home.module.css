@@ -1,0 +1,61 @@
+.container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-row-gap: 1rem;
+    justify-items: center;
+}
+.body{
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-attachment: fixed;
+    background-image: url('https://wallpaperstock.net/wallpapers/thumbs1/36803wide.jpg'); 
+}
+
+.bodyNotFound{
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-attachment: fixed;
+    background-image: url('https://estaticos.muyinteresante.es/uploads/images/gallery/5b473b075cafe87298abe4b4/perro-escondido.jpg');
+}
+.notFound{
+    position: absolute;
+    top:50%;
+    left:40%;
+    color: black;
+}
+.notFoundBack{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00000047;
+}
+
+.btnReset{
+    background-color: transparent;
+    font-weight: 800;
+    color: bisque;
+    border-radius: 0.5rem;
+    border: 2px solid white;
+    margin-left: 0.5rem;
+    animation: circle 1s linear infinite;
+}
+.btnReset:hover{
+    background-color: black;
+}
+
+@keyframes circle {
+    0%{
+        border-right-color: black;
+    }
+    25%{
+        border-bottom-color: black;
+    }
+    50%{
+        border-left-color: black;
+    }
+    75%{
+        border-top-color: black;
+    }
+}

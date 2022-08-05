@@ -1,0 +1,32 @@
+.btn{
+    position: absolute;
+    left: 75%;
+    top: 75%;
+    background-color: #e1dfdb;
+    border: none;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor:pointer;
+    animation: pulse 1s ease-in-out infinite;
+}
+@keyframes pulse {
+    0%{
+        transform: scale(1.1);
+    }
+    50%{
+        transform: scale(.8);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+body{
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-attachment: fixed;
+}
+.body{
+    background-image: url('https://rare-gallery.com/thumbs/4553800-animals-dog-depth-of-field-puppies-baby-animals.jpg');
+}

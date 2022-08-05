@@ -1,0 +1,90 @@
+.body{
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-attachment: fixed;
+    background-image: url('https://wallpaperstock.net/wallpapers/thumbs1/36803wide.jpg'); 
+}
+.section{
+    display: flex;
+    justify-content: space-evenly;
+}
+.form {
+    width: 35%;
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.2rem;
+    position: relative;
+    box-shadow: 0px -1px 8px 2px black;
+}
+.form input{
+    width: 60%;
+}
+.form div input[type='number']{
+    width: 25%;
+}
+.form div label{
+    display:block;
+}
+.form input[type='submit']{
+    width:40%;
+    display:flex;
+    justify-content: center;
+    align-self: flex-end;
+}
+.containerTemps{
+    display:flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+.temperamentGroup{
+    position: relative;
+    display: inline-block;
+}
+.x{
+    position: absolute;
+    font-size: 2.5rem;
+    top:-1.2rem;
+    left: 30%;
+    color: rgb(203, 18, 18);
+    cursor:pointer;
+    opacity: 0;
+}
+.temperaments{
+    font-size: 0.8rem;
+    cursor:pointer;
+}
+.temperamentGroup:hover .x{
+    opacity: 1;
+}
+.form select{
+    width:40%;
+}
+.error{
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #d50606;
+    padding-left: 0.5rem;
+}
+.inputError{
+    border:thin solid #d50606
+}
+.inputError:focus{
+    border:2px solid #d50606;
+    outline: none;
+}
+.submit{
+    width: 3rem;
+    height: 3.5rem;
+    position: relative;
+    left: 85%;
+    background-color: transparent;
+    font-size: 3rem;
+    border: none;
+    cursor: pointer;
+}
+.resp{
+    display:none;
+}
