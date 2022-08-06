@@ -17,6 +17,7 @@ body{
     top:50%;
     left:40%;
     color: black;
+    z-index: 4;
 }
 .notFoundBack{
     position: absolute;
@@ -24,6 +25,7 @@ body{
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 3;
     background-color: #00000047;
     background-repeat: no-repeat;
     background-size: cover; 
