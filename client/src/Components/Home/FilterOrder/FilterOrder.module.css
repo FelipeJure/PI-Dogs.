@@ -14,3 +14,32 @@
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
+
+.btnReset{
+    margin-left: 0.5rem;
+    font-weight: 800;
+    color: bisque;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 0.5rem;
+    cursor:pointer;
+    animation: circle 1s linear infinite;
+}
+.btnReset:hover{
+    background-color: black;
+}
+
+@keyframes circle {
+    0%{
+        border-right-color: black;
+    }
+    25%{
+        border-bottom-color: black;
+    }
+    50%{
+        border-left-color: black;
+    }
+    75%{
+        border-top-color: black;
+    }
+}

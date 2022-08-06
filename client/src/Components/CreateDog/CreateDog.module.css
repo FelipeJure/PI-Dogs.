@@ -1,16 +1,17 @@
-.body{
+
+.section{
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 3.75rem;
     background-repeat: no-repeat;
     background-size: cover; 
     background-attachment: fixed;
     background-image: url('https://wallpaperstock.net/wallpapers/thumbs1/36803wide.jpg'); 
 }
-.section{
-    display: flex;
-    justify-content: space-evenly;
-}
 .form {
     width: 35%;
     padding-left: 1rem;
+    margin-top:1rem;
     display: flex;
     flex-direction: column;
     border-radius: 0.2rem;
@@ -19,6 +20,13 @@
 }
 .form input{
     width: 60%;
+    border-bottom: 2px solid bisque;
+    color: bisque;
+    border-top: hidden;
+    border-left: hidden;
+    border-right: hidden;
+    background-color: transparent;
+    outline:none;
 }
 .form div input[type='number']{
     width: 25%;
@@ -69,11 +77,11 @@
     padding-left: 0.5rem;
 }
 .inputError{
-    border:thin solid #d50606
+    border-bottom:2px solid #d50606!important
 }
 .inputError:focus{
-    border:2px solid #d50606;
-    outline: none;
+    /* border-bottom:2px solid #d50606;
+    outline: none; */
 }
 .submit{
     width: 3rem;

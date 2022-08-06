@@ -3,6 +3,7 @@ export const GET_DOG = 'GET_DOG';
 export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS';
 export const FILTER_BY_TEMPERAMENT = 'FILTER_BY_TEMPERAMENT';
 export const FILTER_BY_BREED = 'FILTER_BY_BREED';
+export const FILTER_BY_ORIGIN = 'FILTER_BY_ORIGIN';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const ORDER_BY_WEIGHT = 'ORDER_BY_WEIGHT';
 export const POST_DOG = 'POST_DOG';
@@ -44,6 +45,17 @@ export function filterByBreed (breed){
     return {
         type:FILTER_BY_BREED,
         payload: breed
+    }
+}
+export function filterByOrigin (origin){
+    return function (dispatch){
+        return (
+            fetch(`http://localhost:3001/dogs/${origin}`)
+            .then(response => response.json())
+            .then(dogs => {
+                console.log(dogs)
+                dispatch({ type: GET_DOG, payload: dogs })})
+        )
     }
 }
 export function orderByName (name){

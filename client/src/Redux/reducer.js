@@ -4,6 +4,7 @@ import {
     GET_TEMPERAMENTS, 
     FILTER_BY_TEMPERAMENT, 
     FILTER_BY_BREED,
+    FILTER_BY_ORIGIN,
     ORDER_BY_NAME,
     ORDER_BY_WEIGHT,
     POST_DOG
@@ -47,6 +48,11 @@ export default function rootReducer (state = initialState, action){
             return{
                 ...state,
                 allDogs:filteredDog,
+            }
+        case FILTER_BY_ORIGIN:
+            return {
+                ...state,
+                allDogs:action.payload
             }
         case ORDER_BY_NAME:
             let orderDogs = action.payload==='A-Z'? state.allDogs.sort((a,b) => {

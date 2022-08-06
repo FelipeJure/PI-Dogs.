@@ -1,15 +1,13 @@
-.body{
-    background-repeat: no-repeat;
-    background-size: cover; 
-    background-attachment: fixed;
-    background-image: url('https://wallpaperstock.net/wallpapers/thumbs1/36803wide.jpg'); 
-}
 .container{
     height: 80vh;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-attachment: fixed;
+    background-image: url('https://wallpaperstock.net/wallpapers/thumbs1/36803wide.jpg'); 
 }
 
 .container img{

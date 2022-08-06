@@ -1,30 +1,17 @@
-.position{
-    position:relative;
-}
 .container{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-row-gap: 1rem;
     justify-items: center;
 }
-.background{
-    /* position: absolute;
-    top:0;
-    bottom:0;
-    right: 0;
-    left: 0; */
+body{
     background-repeat: no-repeat;
     background-size: cover; 
     background-attachment: fixed;
     background-image: url('https://wallpaperstock.net/wallpapers/thumbs1/36803wide.jpg'); 
+
 }
 
-.bodyNotFound{
-    background-repeat: no-repeat;
-    background-size: cover; 
-    background-attachment: fixed;
-    background-image: url('https://estaticos.muyinteresante.es/uploads/images/gallery/5b473b075cafe87298abe4b4/perro-escondido.jpg');
-}
 .notFound{
     position: absolute;
     top:50%;
@@ -38,34 +25,29 @@
     left: 0;
     right: 0;
     background-color: #00000047;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-attachment: fixed;
+    background-image: url('https://estaticos.muyinteresante.es/uploads/images/gallery/5b473b075cafe87298abe4b4/perro-escondido.jpg');
 }
 
-.btnReset{
-    margin-left: 0.5rem;
-    margin-top: 4rem;
-    font-weight: 800;
-    color: bisque;
-    background-color: transparent;
-    border: 2px solid white;
-    border-radius: 0.5rem;
-    cursor:pointer;
-    animation: circle 1s linear infinite;
-}
-.btnReset:hover{
-    background-color: black;
+.loader{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    width: 5rem;
+    height: 5rem;
+    border: 0.5rem solid #00000021;
+    border-top-color: black;
+    border-radius: 50%;
+    animation: spinner 1s linear infinite;
 }
 
-@keyframes circle {
+@keyframes spinner {
     0%{
-        border-right-color: black;
+        transform: rotate(0deg);
     }
-    25%{
-        border-bottom-color: black;
-    }
-    50%{
-        border-left-color: black;
-    }
-    75%{
-        border-top-color: black;
+    100%{
+        transform: rotate(360deg);
     }
 }

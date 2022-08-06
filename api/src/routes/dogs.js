@@ -53,6 +53,7 @@ const findDbDogs = async () => {
         })
     }
     return dbDog
+    // return []
     }
     catch (error){
         console.log(error)
@@ -92,6 +93,15 @@ router.get('/', async (req, res) =>{
     }
 })
 
+router.get('/API', async (req,res) => {
+    const apiDogs = await callApiDogs()
+    res.json(apiDogs)
+})
+
+router.get('/created', async (req,res) => {
+    const createdDogs = await findDbDogs()
+    res.json(createdDogs)
+})
 router.get('/:idRaza',async (req,res) => {
     const { idRaza } = req.params;
     let dogs = await findAllDogs()
@@ -99,11 +109,9 @@ router.get('/:idRaza',async (req,res) => {
     if (dog) return res.json(dog)
     return res.status(404).json({message: 'Dog not found'})
 })
-
 router.post('/', async (req,res) =>{
     const { name, minHeight, maxHeight, minWeight, maxWeight, minLife_span, maxLife_span, image, /*userId, */temperament} = req.body;
     try{
-        // console.log(req.body)
         if (name && minHeight && maxHeight && minWeight && maxWeight && minLife_span && maxLife_span /*&& userId*/ && temperament ){
             let dogs = await findAllDogs()
             let existName = dogs.find(dog => dog.name.toLowerCase() === name.toLowerCase())

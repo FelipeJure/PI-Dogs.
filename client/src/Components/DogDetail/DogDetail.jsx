@@ -16,7 +16,6 @@ export default function DogDetail (){
             console.log(error)
         })
     },[id])
-    document.body.className = s.body
     if (dog === undefined){
         return <div className={s.loader}></div> 
     } else if (dog === null || dog.message){

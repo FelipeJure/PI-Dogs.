@@ -8,10 +8,7 @@ export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage
   const [pageNumberLimit, setpageNumberLimit] = useState(4);
   const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(4);
   const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
-  const [status, setStatus] = useState({
-    btnPrev: false,
-    btnNext: false,
-  });
+  const [status, setStatus] = useState(false);
 
   const pageNumber = [];
   for (let i = 0; i < Math.ceil(allDogs / dogsPerPage); i++) {
@@ -19,15 +16,13 @@ export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage
   }
 
   const handlePrev = (double) => {
-      console.log(minPageNumberLimit-pageNumberLimit)
     if (double) {
       paginado(
         currentPage - pageNumberLimit
       );
-      minPageNumberLimit - pageNumberLimit <= 0 && setStatus({...status, btnPrev:true});
       setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
-      setStatus({ ...status, btnNext: false });
+      setStatus(false);
       return;
     }
     paginado(currentPage - 1);
@@ -35,9 +30,8 @@ export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage
       if(minPageNumberLimit - pageNumberLimit <= 0) setStatus({...status, btnPrev:true});
       setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
-      setStatus({ ...status, btnNext: false });
+      setStatus(false);
     }
-// if(allDogs===0) setStatus({...status, btnPrev:true})
   };
 
   const handleNext = (double) => {
@@ -49,32 +43,30 @@ export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage
       );
       setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
-      setStatus({...status, btnPrev:false});
       pageNumber.length < maxPageNumberLimit + pageNumberLimit &&
-        setStatus({ ...status, btnNext: true });
+        setStatus(true);
       return;
     }
     paginado(currentPage + 1);
     if (currentPage + 1 > maxPageNumberLimit) {
       setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
-      setStatus({...status, btnPrev:false});
       pageNumber.length < maxPageNumberLimit + pageNumberLimit &&
-        setStatus({ ...status, btnNext: true });
+        setStatus(true);
     }
   };
 
   return (
       <section className={s.arrowContainer}>
         {minPageNumberLimit >= 1 ? (
-        <button className={s.arrow} onClick={() => handlePrev(true)} disabled={status.btnPrev}>
+        <button className={s.arrow} onClick={() => handlePrev(true)} >
           <IoPlayBackOutline />
         </button>
         )
         :
         <button
           className={`${s.arrow} ${s.left}`}
-          disabled={true}
+          disabled
         >
           <IoPlayOutline />
         </button>} 
@@ -82,7 +74,6 @@ export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage
         <button
           className={`${s.arrow} ${s.left}`}
           onClick={() => handlePrev(false)}
-          disabled={status.btnPrev}
         >
           <IoPlayOutline />
         </button>
@@ -90,7 +81,7 @@ export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage
        : 
        <button
           className={`${s.arrow} ${s.left}`}
-          disabled={true}
+          disabled
         >
           <IoPlayOutline />
         </button>} 
@@ -116,21 +107,39 @@ export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage
             }
           })}
       </div>
-
+    {pageNumber?.length <= maxPageNumberLimit?
+      <>
       <button
-        className={s.arrow}
-        onClick={() => handleNext(false)}
-        disabled={status.btnNext}
+      className={s.arrow}
+        disabled
       >
         <IoPlayOutline />
       </button>
       <button
-        className={s.arrow}
-        onClick={() => handleNext(true)}
-        disabled={status.btnNext}
+      className={s.arrow}
+      disabled
       >
         <IoPlayForwardOutline />
       </button>
+      </>
+      :
+    <>
+      <button
+      className={s.arrow}
+        onClick={() => handleNext(false)}
+        disabled={status}
+      >
+        <IoPlayOutline />
+      </button>
+      <button
+      className={s.arrow}
+      onClick={() => handleNext(true)}
+      disabled={status}
+      >
+        <IoPlayForwardOutline />
+      </button>
+      </>
+      }
     </section>
   );
 }

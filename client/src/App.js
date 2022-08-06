@@ -15,7 +15,7 @@ function App() {
         <LandingPage/>
       </Route>
       <Route path='/home'>
-        {/* <Navbar/> */}
+        <Navbar/>
         <Home/>
       </Route>
       <Route path='/dogs/:id'>
