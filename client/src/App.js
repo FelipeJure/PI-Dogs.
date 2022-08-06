@@ -14,16 +14,16 @@ function App() {
       <Route exact path='/'>
         <LandingPage/>
       </Route>
-      <Route path='/home'>
+      <Route path='/:anything'>
         <Navbar/>
+      </Route>
+      <Route path='/home'>
         <Home/>
       </Route>
       <Route path='/dogs/:id'>
-        <Navbar/>
         <DogDetail/>
       </Route>
       <Route path='/createDog'>
-        <Navbar/>
         <CreateDog/>
       </Route>
       </div>

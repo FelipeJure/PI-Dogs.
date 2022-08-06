@@ -56,15 +56,16 @@ export default function Home() {
         alwaysAllDogs={alwaysAllDogs}
         resetPagination={resetPagination}
       />
-      {allDogs.length?
-      <Pagination
-      dogsPerPage={page.dogsPerPage}
-      currentPage={page.currentPage}
-      allDogs={allDogs.length}
-      paginado={paginado}
-      />
-    :
-    <div className={s.loader}></div> }
+      {allDogs.length ? (
+        <Pagination
+          dogsPerPage={page.dogsPerPage}
+          currentPage={page.currentPage}
+          allDogs={allDogs.length}
+          paginado={paginado}
+        />
+      ) : (
+        <div className={s.loader}></div>
+      )}
       <div className={s.container}>
         {currentDogs?.map((dog) => {
           return (
