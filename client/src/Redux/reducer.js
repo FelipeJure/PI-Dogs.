@@ -11,8 +11,8 @@ import {
 
 const initialState = {
     allDogs: [],
-    temperaments:[],
     alwaysAllDogs:[],
+    temperaments:[],
 };
 
 export default function rootReducer (state = initialState, action){

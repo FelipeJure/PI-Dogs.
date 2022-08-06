@@ -6,6 +6,7 @@ import s from './Home.module.css';
 import Pagination from "./Pagination/Pagination";
 import FilterOrder from "./FilterOrder/FilterOrder";
 import SearchBar from "./SearchBar/SearchBar";
+import Navbar from "../Navbar/Navbar";
 
 export default function Home (){
     const [order, setOrder] = useState('')
@@ -20,18 +21,8 @@ export default function Home (){
     useEffect(()=>{
         dispatch(getAllDogs());
         dispatch(getTemperaments())
-        .then(()=>{
-            (function (){
-            console.log('no entro al length todavia')
-            console.log(allDogs)
-            if(allDogs.length) {
-                resetPagination()
-            }
-            })()
-        })
+        resetPagination()
     },[])
-    
-    document.body.className = s.body
     
     if(allDogs.message) {
         document.body.className = s.bodyNotFound
@@ -54,17 +45,17 @@ export default function Home (){
     }
     const resetPagination = ()=>{
         setPage({...page,currentPage:1})
-        let nextArrow = document.getElementsByClassName('next')[0]
+        // let nextArrow = document.getElementsByClassName('next')[0]
         console.log('ejecuto la funcion')
         if(Math.ceil(allDogs.length/8)<5){
             console.log('entro al if de menor a 5')
-            console.log(nextArrow)
-            if(nextArrow) nextArrow.disabled = true
+            // console.log(nextArrow)
+            // if(nextArrow) nextArrow.disabled = true
         } else{
             console.log('entro al else')
             console.log(allDogs.length)
             console.log(page.dogsPerPage)
-            if(nextArrow) nextArrow.disabled = false
+            // if(nextArrow) nextArrow.disabled = false
         }
     }
 
@@ -81,41 +72,43 @@ export default function Home (){
         orderWeight.value = '-'
     }
     return (
-        <>
-            <SearchBar 
-                page={page} 
-                setPage={setPage}
-                resetPagination={resetPagination}
-            />
-            <button onClick={handleReset} className={s.btnReset}>Reset dogs</button>
-            <FilterOrder 
-                page={page}
-                setPage={setPage}
-                setOrder={setOrder}
-                temperaments={temperaments}
-                alwaysAllDogs={alwaysAllDogs}
-                resetPagination={resetPagination}
-            />
-            <Pagination 
-            dogsPerPage={page.dogsPerPage}
-            page={page} 
-            allDogs={allDogs.length} 
-            paginado={paginado}
+        <div className={s.background}>
+            <div className={s.position}>
+                <Navbar/>
+                <SearchBar 
+                    page={page} 
+                    paginado={paginado}
                 />
-                <div className={s.container}>
-                {currentDogs?.map(dog =>{
-                    return <Card
-                        name={dog.name}
-                        key={dog.id}
-                        id={dog.id}
-                        image={dog.image}
-                        temperament= {dog.temperaments?dog.temperaments.map(t => t.name):dog.temperament}
-                        life_span= {dog.life_span}
-                        weight= {dog.weight}
-                        height={dog.height}
-                        />
-                    })}
+                <button onClick={handleReset} className={s.btnReset}>Reset dogs</button>
+                <FilterOrder 
+                    page={page}
+                    setPage={setPage}
+                    setOrder={setOrder}
+                    temperaments={temperaments}
+                    alwaysAllDogs={alwaysAllDogs}
+                    resetPagination={resetPagination}
+                />
+                <Pagination 
+                dogsPerPage={page.dogsPerPage}
+                currentPage={page.currentPage} 
+                allDogs={allDogs.length} 
+                paginado={paginado}
+                    />
+                    <div className={s.container}>
+                    {currentDogs?.map(dog =>{
+                        return <Card
+                            name={dog.name}
+                            key={dog.id}
+                            id={dog.id}
+                            image={dog.image}
+                            temperament= {dog.temperaments?dog.temperaments.map(t => t.name):dog.temperament}
+                            life_span= {dog.life_span}
+                            weight= {dog.weight}
+                            height={dog.height}
+                            />
+                        })}
+                </div>
             </div>
-        </>
+        </div>
     )
 }

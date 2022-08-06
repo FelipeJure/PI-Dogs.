@@ -22,11 +22,14 @@
     }
 }
 
-body{
+.container{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
     background-repeat: no-repeat;
     background-size: cover; 
     background-attachment: fixed;
-}
-.body{
     background-image: url('https://rare-gallery.com/thumbs/4553800-animals-dog-depth-of-field-puppies-baby-animals.jpg');
 }

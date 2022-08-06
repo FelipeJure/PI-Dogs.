@@ -6,18 +6,17 @@ import s from './FilterOrder.module.css';
 export default function Filter_Order ({temperaments, alwaysAllDogs, page, setPage, setOrder, resetPagination}) {
     
     const dispatch = useDispatch()
-
-    let moveDiv = document.getElementsByClassName('moveDiv')[0]
+    // let moveDiv = document.getElementsByClassName('moveDiv')[0]
 
     const handleFilterTemperament = e =>{
         dispatch(filterByTemperament(e.target.value))
-        if(moveDiv) moveDiv.style.transform = 'translateX(0rem)'
+        // if(moveDiv) moveDiv.style.transform = 'translateX(0rem)'
         resetPagination()
     }
     const handleFilterBreed = e =>{
         setPage({...page, currentPage:1})
         dispatch(filterByBreed(e.target.value))
-        if(moveDiv) moveDiv.style.transform = 'translateX(0rem)'
+        // if(moveDiv) moveDiv.style.transform = 'translateX(0rem)'
     }
     const handleOrderName = e =>{
         dispatch(orderByName(e.target.value))
@@ -52,7 +51,6 @@ export default function Filter_Order ({temperaments, alwaysAllDogs, page, setPag
                         return <option value={t.name} key={t.id}>{t.name}</option>
                     })}
                 </select>
-                {/* {temperament[0]? temperament.map(f => <span key={f}>{f}</span>): null} */}
                 <span>Breed</span>
                 <select name="breed" id="breed" onChange={handleFilterBreed}>
                     <option value="all">All</option>

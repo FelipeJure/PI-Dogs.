@@ -1,11 +1,3 @@
-.home{
-    height: 2rem;
-    width: 2rem;
-    color:bisque;
-}
-.home:hover{
-    box-shadow: 0px 0px 2px 2px;
-}
 .navbar{
     display: flex;
     justify-content: space-between;
@@ -13,11 +5,18 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    margin-bottom:0.5rem;
+    padding-bottom:0.5rem;
     padding: 0 1rem;
-    border-radius:0.3rem;
     background-color: transparent;
     backdrop-filter: blur(1rem);
+}
+.home{
+    height: 2rem;
+    width: 2rem;
+    color:bisque;
+}
+.home:hover{
+    box-shadow: 0px 0px 2px 2px;
 }
 
 .create{
