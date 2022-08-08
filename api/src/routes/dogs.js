@@ -127,7 +127,7 @@ router.post('/', async (req,res) =>{
                 })
                 .then(dog => {
                     return dog.setTemperaments(temperament)})
-                .then(()=> res.json({message: 'Dog saccesfully created' }))
+                .then(()=> res.status(201).json({message: 'Dog saccesfully created' }))
             } else {
                 return res.status(404).json({message: 'This dog already exist'})
             } 

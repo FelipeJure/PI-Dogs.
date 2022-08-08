@@ -22,7 +22,6 @@ export default function Home() {
     dispatch(getTemperaments());
     resetPagination();
   }, []);
-
   if (allDogs.message) {
     setTimeout(() => {
       dispatch(getAllDogs());
