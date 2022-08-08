@@ -14,6 +14,7 @@ const initialState = {
     allDogs: [],
     alwaysAllDogs:[],
     temperaments:[],
+    specificTemperaments:null
 };
 
 export default function rootReducer (state = initialState, action){
@@ -22,13 +23,31 @@ export default function rootReducer (state = initialState, action){
             return {
                 ...state,
                 allDogs: action.payload,
-                alwaysAllDogs: action.payload
+                alwaysAllDogs: action.payload,
+                specificTemperaments: null
             }
         case GET_DOG:
+            let someTemperaments = null
+            if(action.payload.length){
+                let someTemp = []
+                someTemp = action.payload.reduce((prev,curr) => {
+                    if (curr.temperament) return prev.concat(curr.temperament)
+                }, [])
+                const setTemperaments = new Set (someTemp)
+                const arrayTemperaments = Array.from(setTemperaments)
+                someTemperaments = []
+                for(let i = 0; i < arrayTemperaments.length; i++){
+                    for(let j = 0; j < state.temperaments.length; j++){
+                        if (arrayTemperaments[i] === state.temperaments[j].name) someTemperaments.push(state.temperaments[j])
+                    }
+                } 
+                someTemperaments.sort((a,b)=> (a.name > b.name ? 1 : -1))
+            }
             return {
                 ...state,
                 allDogs: action.payload,
-                alwaysAllDogs: action.payload
+                alwaysAllDogs: action.payload,
+                specificTemperaments: someTemperaments
             }
         case GET_TEMPERAMENTS:
             return {
@@ -50,9 +69,12 @@ export default function rootReducer (state = initialState, action){
                 allDogs:filteredDog,
             }
         case FILTER_BY_ORIGIN:
+            let origin
+            if(action.payload.length) origin = action.payload
+            else origin = {message:'Dog not found'}
             return {
                 ...state,
-                allDogs:action.payload
+                allDogs:origin
             }
         case ORDER_BY_NAME:
             let orderDogs = action.payload==='A-Z'? state.allDogs.sort((a,b) => {

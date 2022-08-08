@@ -4,7 +4,7 @@ import { filterByTemperament, filterByBreed, filterByOrigin, orderByName, orderB
 import { getAllDogs } from "../../../Redux/actions";
 import s from './FilterOrder.module.css';
 
-export default function Filter_Order ({temperaments, alwaysAllDogs, page, setPage, setOrder, resetPagination}) {
+export default function Filter_Order ({temperaments, alwaysAllDogs, page, setPage, resetPagination}) {
     
     const dispatch = useDispatch()
     const [select, setSelect] = useState({
@@ -34,23 +34,23 @@ export default function Filter_Order ({temperaments, alwaysAllDogs, page, setPag
     const handleOrderName = e =>{
         dispatch(orderByName(e.target.value))
         setPage({...page, currentPage:1})
-        // setOrder(`Ordenado por ${e.target.value}`)
         setSelect({...select, [e.target.name]: e.target.value})
     }
     const handleOrderWeight = e =>{
         setPage({...page, currentPage:1})
         dispatch(orderByWeight(e.target.value))
-        // setOrder(`Ordenado por ${e.target.value}`)
         setSelect({...select, [e.target.name]: e.target.value})
     }
     const handleReset = ()=>{
         dispatch(getAllDogs())
         resetPagination()
-        setSelect({orderName:'A-Z',
-        weight: '-',
-        temperament: 'all',
-        breed:'all',
-        origin:'all'})
+        setSelect({
+            orderName:'A-Z',
+            weight: '-',
+            temperament: 'all',
+            breed:'all',
+            origin:'all'
+        })
     }
     return (
         <>

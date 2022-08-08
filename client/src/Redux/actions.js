@@ -22,7 +22,9 @@ export function getDog (name){
         return (
             fetch(`http://localhost:3001/dogs?name=${name}`)
             .then(response => response.json())
-            .then(dogs => dispatch({ type: GET_DOG, payload: dogs }))
+            .then(dogs => {
+                dispatch({ type: GET_DOG, payload: dogs })
+            })
         )
     }
 }
@@ -53,8 +55,7 @@ export function filterByOrigin (origin){
             fetch(`http://localhost:3001/dogs/${origin}`)
             .then(response => response.json())
             .then(dogs => {
-                console.log(dogs)
-                dispatch({ type: GET_DOG, payload: dogs })})
+                dispatch({ type: FILTER_BY_ORIGIN, payload: dogs })})
         )
     }
 }

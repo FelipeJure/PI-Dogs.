@@ -127,7 +127,6 @@ export default function CreateDog() {
     });
     setTemperament(temperament.filter((t) => t.id !== e.target.id));
   };
-//   document.body.className = s.body;
 
   const validateSubmitButton = () => {
     if (

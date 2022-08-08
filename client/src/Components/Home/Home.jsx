@@ -8,10 +8,10 @@ import FilterOrder from "./FilterOrder/FilterOrder";
 import SearchBar from "./SearchBar/SearchBar";
 
 export default function Home() {
-  const [order, setOrder] = useState("");
   let allDogs = useSelector((state) => state.allDogs);
   let alwaysAllDogs = useSelector((state) => state.alwaysAllDogs);
   const temperaments = useSelector((state) => state.temperaments);
+  const specificTemperaments = useSelector(state => state.specificTemperaments);
   const dispatch = useDispatch();
   const [page, setPage] = useState({
     currentPage: 1,
@@ -44,15 +44,13 @@ export default function Home() {
   const resetPagination = () => {
     setPage({ ...page, currentPage: 1 });
   };
-
   return (
     <div>
       <SearchBar page={page} paginado={paginado} />
       <FilterOrder
         page={page}
         setPage={setPage}
-        setOrder={setOrder}
-        temperaments={temperaments}
+        temperaments={specificTemperaments? specificTemperaments: temperaments}
         alwaysAllDogs={alwaysAllDogs}
         resetPagination={resetPagination}
       />
