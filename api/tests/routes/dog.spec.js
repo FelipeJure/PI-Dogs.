@@ -3,12 +3,12 @@ const { expect } = require('chai');
 // const { INET } = require('sequelize/types/data-types.js');
 const session = require('supertest-session');
 const app = require('../../src/app.js');
-const { Dog, Temperament, conn } = require('../../src/db.js');
+const { Dog, conn } = require('../../src/db.js');
 
 const agent = session(app);
 const createdDog = {
-  name: 'pepe',
-  id: 1000,
+  name: 'pug',
+  id: 999,
   height: `50 - 75`,
   weight: `10 - 20`,
   life_span: `5 - 10 years`,
@@ -24,7 +24,7 @@ const dog = {
   temperament: [1,2,3]
 }
 const repeatedDog = {
-  name:'pepe',
+  name:'PUG',
   minHeight: 50, 
   maxHeight: 75, 
   minWeight: 20, 
@@ -44,20 +44,16 @@ describe('Dog routes',function () {
   this.timeout(10000)
   before(() => conn.authenticate()
   .then(() => Dog.sync({ force: true }))
+  .then(() => Dog.create(createdDog))
   .catch((err) => {
     console.error('Unable to connect to the database:', err);
   }));
-  // beforeEach(() => Dog.sync({ force: true }))
-    // .then(() => {
-    //   Dog.create(createdDog)
-    // }))
-    // .then(dog => dog.setTemperaments(temperament)));
   describe('GET /dogs', () => {
     it('should return all Dogs', () => {
       return agent.get('/dogs')
       .then(res => {
         expect(res.body).to.be.an('Array')
-        expect(res.body.length).to.be.equal(172)
+        expect(res.body.length).to.be.equal(173)
       })
     })
     it('should return coincident dogs if recieve a name by query', () => {
@@ -74,6 +70,11 @@ describe('Dog routes',function () {
       expect(res.body).to.be.an('Object')
       expect(res.body.name).to.be.equal('American Bulldog')
     })
+    it('should return an specific created dog if recieve an ID by params', async () => {
+      const res = await agent.get('/dogs/999')
+      expect(res.body).to.be.an('Object')
+      expect(res.body.name).to.be.equal('Pug')
+    })
   })
   describe('POST /dogs', () => {
     it('should get an error status 404 with message "Complete all information"', () => {
@@ -82,6 +83,14 @@ describe('Dog routes',function () {
       .then(res => {
         expect(res.status).to.be.equal(404)
         expect(res.body.message).to.equal('Complete all information')
+      })
+    })
+    it('should get an error status 404 with message "This dog already exist"', () => {
+      return agent.post('/dogs')
+      .send(repeatedDog)
+      .then(res => {
+        expect(res.status).to.be.equal(404)
+        expect(res.body.message).to.equal('This dog already exist')
       })
     })
     it('should get status 201 with message "Dog saccesfully created"', () => {

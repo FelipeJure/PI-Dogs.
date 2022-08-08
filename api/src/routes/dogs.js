@@ -122,7 +122,7 @@ router.post('/', async (req,res) =>{
                     height: `${minHeight} - ${maxHeight}`,
                     weight: `${minWeight} - ${maxWeight}`,
                     life_span: `${minLife_span} - ${maxLife_span} years`,
-                    image: image? image: null,
+                    image: image && image,
                     // userId
                 })
                 .then(dog => {
