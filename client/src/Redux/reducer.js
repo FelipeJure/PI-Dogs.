@@ -71,7 +71,7 @@ export default function rootReducer (state = initialState, action){
         case FILTER_BY_ORIGIN:
             let origin
             if(action.payload.length) origin = action.payload
-            else origin = {message:'Dog not found'}
+            else origin = {message:"Create one dog!"}
             return {
                 ...state,
                 allDogs:origin
