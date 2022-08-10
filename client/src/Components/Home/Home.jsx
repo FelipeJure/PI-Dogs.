@@ -13,11 +13,12 @@ export default function Home() {
   const temperaments = useSelector((state) => state.temperaments);
   const specificTemperaments = useSelector(state => state.specificTemperaments);
   const dispatch = useDispatch();
-  const [showDogs, setShowDogs] = useState(undefined);
   const [page, setPage] = useState({
     currentPage: 1,
     dogsPerPage: 8,
   });
+  const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(4);
+  const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
   useEffect(() => {
     dispatch(getAllDogs());
     dispatch(getTemperaments());
@@ -37,21 +38,20 @@ export default function Home() {
   }
   const lastDog = page.currentPage * page.dogsPerPage;
   const firstDog = lastDog - page.dogsPerPage;
-  const currentDogs = showDogs?showDogs.slice(firstDog, lastDog): allDogs.slice(firstDog, lastDog);
+  const currentDogs = allDogs.slice(firstDog, lastDog);
   const paginado = (pageNumber) => {
     setPage({ ...page, currentPage: pageNumber });
   };
   const resetPagination = () => {
     setPage({ ...page, currentPage: 1 });
+    setminPageNumberLimit(0);
+    setmaxPageNumberLimit(4);
   };
   return (
     <div>
-      <SearchBar page={page} resetPagination={resetPagination} />
+      <SearchBar page={page} resetPagination={resetPagination}/>
       <FilterOrder
-        page={page}
-        setPage={setPage}
         temperaments={specificTemperaments? specificTemperaments: temperaments}
-        setShowDogs={setShowDogs}
         alwaysAllDogs={alwaysAllDogs}
         resetPagination={resetPagination}
       />
@@ -59,6 +59,10 @@ export default function Home() {
         <Pagination
           dogsPerPage={page.dogsPerPage}
           currentPage={page.currentPage}
+          setmaxPageNumberLimit={setmaxPageNumberLimit}
+          maxPageNumberLimit={maxPageNumberLimit}
+          setminPageNumberLimit={setminPageNumberLimit}
+          minPageNumberLimit={minPageNumberLimit}
           allDogs={allDogs.length}
           paginado={paginado}
         />
@@ -73,8 +77,14 @@ export default function Home() {
               key={dog.id}
               id={dog.id}
               image={dog.image}
-              temperament={dog.temperament}
+              temperament={
+                dog.temperaments
+                  ? dog.temperaments.map((t) => t.name)
+                  : dog.temperament
+              }
+              life_span={dog.life_span}
               weight={dog.weight}
+              height={dog.height}
             />
           );
         })}

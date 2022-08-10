@@ -113,15 +113,22 @@ router.get('/', async (req, res) =>{
     }
 })
 
-router.get('/API', async (req,res) => {
-    const apiDogs = await callApiDogs()
-    res.json(apiDogs)
+router.get('/filteredByOrigin/:origin', async (req,res) => {
+    const { origin } = req.params;
+    if(origin === 'all'){
+        const allDogs = await findAllDogs();
+        return res.json(allDogs)
+    }
+    if(origin === 'API'){
+        const apiDogs = await callApiDogs()
+        return res.json(apiDogs)
+    }
+    if(origin === 'created'){
+        const createdDogs = await findDbDogs()
+        return res.json(createdDogs)
+    }
 })
 
-router.get('/created', async (req,res) => {
-    const createdDogs = await findDbDogs()
-    res.json(createdDogs)
-})
 router.get('/:idRaza',async (req,res) => {
     const { idRaza } = req.params;
     let dogs = await findAllDogs()

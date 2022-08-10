@@ -52,7 +52,7 @@ export function filterByBreed (breed){
 export function filterByOrigin (origin){
     return function (dispatch){
         return (
-            fetch(`http://localhost:3001/dogs/${origin}`)
+            fetch(`http://localhost:3001/dogs/filteredByOrigin/${origin}`)
             .then(response => response.json())
             .then(dogs => {
                 dispatch({ type: FILTER_BY_ORIGIN, payload: dogs })})
