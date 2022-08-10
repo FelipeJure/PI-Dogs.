@@ -4,7 +4,7 @@ import { getDog } from "../../../Redux/actions";
 import s from './SearchBar.module.css';
 import { GoSearch } from 'react-icons/go';
 
-export default function SearchBar ({ paginado }){
+export default function SearchBar ({ resetPagination }){
     const dispatch = useDispatch()
     const [input, setInput] = useState('')
     const changeName = (e) => {
@@ -13,7 +13,7 @@ export default function SearchBar ({ paginado }){
     const onSearch = (e) => {
         e.preventDefault()
         dispatch(getDog(input))
-        .then(()=>paginado(1))
+        .then(()=>resetPagination())
         setInput('')
     }
     return (

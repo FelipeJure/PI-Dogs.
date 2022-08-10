@@ -84,9 +84,29 @@ router.get('/', async (req, res) =>{
         let dogs = await findAllDogs()
         if (name){
             dogs = dogs.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()))
-            if(dogs.length) return res.json(dogs)
+            if(dogs.length) {
+                dogs = dogs.map(dog => {
+                    return {
+                        name: dog.name,
+                        weight: dog.weight,
+                        temperament: dog.temperaments? dog.temperaments.map((t) => t.name) : dog.temperament,
+                        image:dog.image,
+                        id:dog.id
+                    }
+                })
+                return res.json(dogs)
+            }
             res.status(404).json({message: 'Dog not found'})
         }
+        dogs = dogs.map(dog => {
+            return {
+                name: dog.name,
+                weight: dog.weight,
+                temperament: dog.temperaments? dog.temperaments.map((t) => t.name) : dog.temperament,
+                image:dog.image,
+                id:dog.id
+            }
+        })
         return res.json(dogs)
     } catch(error){
         console.log(error)

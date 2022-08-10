@@ -13,6 +13,7 @@ export default function Home() {
   const temperaments = useSelector((state) => state.temperaments);
   const specificTemperaments = useSelector(state => state.specificTemperaments);
   const dispatch = useDispatch();
+  const [showDogs, setShowDogs] = useState(undefined);
   const [page, setPage] = useState({
     currentPage: 1,
     dogsPerPage: 8,
@@ -36,7 +37,7 @@ export default function Home() {
   }
   const lastDog = page.currentPage * page.dogsPerPage;
   const firstDog = lastDog - page.dogsPerPage;
-  const currentDogs = allDogs.slice(firstDog, lastDog);
+  const currentDogs = showDogs?showDogs.slice(firstDog, lastDog): allDogs.slice(firstDog, lastDog);
   const paginado = (pageNumber) => {
     setPage({ ...page, currentPage: pageNumber });
   };
@@ -45,11 +46,12 @@ export default function Home() {
   };
   return (
     <div>
-      <SearchBar page={page} paginado={paginado} />
+      <SearchBar page={page} resetPagination={resetPagination} />
       <FilterOrder
         page={page}
         setPage={setPage}
         temperaments={specificTemperaments? specificTemperaments: temperaments}
+        setShowDogs={setShowDogs}
         alwaysAllDogs={alwaysAllDogs}
         resetPagination={resetPagination}
       />
@@ -71,14 +73,8 @@ export default function Home() {
               key={dog.id}
               id={dog.id}
               image={dog.image}
-              temperament={
-                dog.temperaments
-                  ? dog.temperaments.map((t) => t.name)
-                  : dog.temperament
-              }
-              life_span={dog.life_span}
+              temperament={dog.temperament}
               weight={dog.weight}
-              height={dog.height}
             />
           );
         })}

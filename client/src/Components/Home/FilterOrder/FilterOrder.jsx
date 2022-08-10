@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { filterByTemperament, filterByBreed, filterByOrigin, orderByName, orderByWeight } from "../../../Redux/actions";
 import { getAllDogs } from "../../../Redux/actions";
 import s from './FilterOrder.module.css';
 
-export default function Filter_Order ({temperaments, alwaysAllDogs, page, setPage, resetPagination}) {
+export default function Filter_Order ({temperaments, alwaysAllDogs, setShowDogs, page, setPage, resetPagination}) {
     
     const dispatch = useDispatch()
+    
     const [select, setSelect] = useState({
         orderName:'A-Z',
         weight: '-',
@@ -14,7 +15,9 @@ export default function Filter_Order ({temperaments, alwaysAllDogs, page, setPag
         breed:'all',
         origin:'all'
     })
-
+    useEffect(()=>{
+        setShowDogs(alwaysAllDogs)
+    }, [])
     const handleFilterTemperament = e =>{
         dispatch(filterByTemperament(e.target.value))
         resetPagination()
@@ -28,8 +31,14 @@ export default function Filter_Order ({temperaments, alwaysAllDogs, page, setPag
     const handleFilterOrigin = e => {
         if(e.target.value === 'all') return alwaysAllDogs
         setPage({...page, currentPage:1})
-        dispatch(filterByOrigin(e.target.value))
         setSelect({...select, [e.target.name]: e.target.value})
+        fetch(`http://localhost:3001/dogs/${e.target.value}`)
+            .then(response => response.json())
+            .then(dogs => { 
+                if(dogs.length) setShowDogs(dogs) 
+            else setShowDogs({message:"Create one dog!"})
+                })
+        // dispatch(filterByOrigin(e.target.value))
     }
     const handleOrderName = e =>{
         dispatch(orderByName(e.target.value))
