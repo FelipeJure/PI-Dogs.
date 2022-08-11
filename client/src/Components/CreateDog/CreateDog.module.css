@@ -104,6 +104,9 @@
     border: none;
     cursor: pointer;
 }
-.resp{
+.show{
+    display:flex;
+}
+.hidden{
     display:none;
 }

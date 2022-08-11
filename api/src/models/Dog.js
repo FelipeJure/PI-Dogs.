@@ -12,7 +12,8 @@ module.exports = (sequelize) => {
       unique:true
     },
     id:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     height:{

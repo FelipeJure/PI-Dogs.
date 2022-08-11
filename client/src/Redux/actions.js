@@ -7,6 +7,7 @@ export const FILTER_BY_ORIGIN = 'FILTER_BY_ORIGIN';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const ORDER_BY_WEIGHT = 'ORDER_BY_WEIGHT';
 export const POST_DOG = 'POST_DOG';
+export const DELETE_DOG = 'DELETE_DOG';
 
 export function getAllDogs (){
     return function (dispatch){
@@ -55,7 +56,7 @@ export function filterByOrigin (origin){
             fetch(`http://localhost:3001/dogs/filteredByOrigin/${origin}`)
             .then(response => response.json())
             .then(dogs => {
-                dispatch({ type: FILTER_BY_ORIGIN, payload: dogs })})
+                dispatch({ type: FILTER_BY_ORIGIN, payload: dogs, filter:origin })})
         )
     }
 }
@@ -79,6 +80,20 @@ export function createDog (payload){
             headers:{
                 'Content-Type': 'application/json'
             }
+        }).then(res => res.json())
+        .then(response => {
+            return {type:POST_DOG, payload:response}
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
+}
+
+export function deleteDog (id) {
+    return async function (){
+        return fetch(`http://localhost:3001/dogs/${id}`, {
+            method:'DELETE'
         }).then(res => res.json())
         .then(response => {
             return {type:POST_DOG, payload:response}

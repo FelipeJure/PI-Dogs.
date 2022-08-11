@@ -26,6 +26,44 @@
     font-size: 2rem;
 }
 
+.editBtn{
+    font-family: 'Square Peg', cursive;
+    font-weight: 600;
+    position: absolute;
+    top: 15%;
+    left: 44%;
+    border: none;
+    border-radius: 0.2rem;
+    background-color: #C997C6;
+    padding: 0.4rem;
+    cursor:pointer;
+    transition: transform linear 0.3s;
+}
+.editBtn:hover{
+    color:bisque;
+    background-color: rgb(106 61 90);
+    transform: scale(1.2);
+}
+
+.deleteBtn{
+    font-family: 'Square Peg', cursive;
+    font-weight: 600;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    border: none;
+    border-radius: 0.2rem;
+    background-color: #dd3636;
+    padding: 0.4rem;
+    cursor:pointer;
+    transition: transform linear 0.3s;
+}
+.deleteBtn:hover{
+    color:bisque;
+    background-color: #880f0f;
+    transform: scale(1.2);
+}
+
 .loader{
     position: absolute;
     top:50%;

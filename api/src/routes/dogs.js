@@ -49,6 +49,7 @@ const findDbDogs = async () => {
                 return name = name[0].toUpperCase() + name.substring(1).toLowerCase()
             })
             dog.name = dog.name.join(' ')
+            dog.temperament = dog.temperaments.map((t) => t.name)
             return dog
         })
     }
@@ -76,7 +77,6 @@ const findAllDogs = async () => {
         console.log(error)
     }
 }
-let idValue = 1000
 
 router.get('/', async (req, res) =>{
     const { name } = req.query;
@@ -89,7 +89,7 @@ router.get('/', async (req, res) =>{
                     return {
                         name: dog.name,
                         weight: dog.weight,
-                        temperament: dog.temperaments? dog.temperaments.map((t) => t.name) : dog.temperament,
+                        temperament: dog.temperament,
                         image:dog.image,
                         id:dog.id
                     }
@@ -102,7 +102,7 @@ router.get('/', async (req, res) =>{
             return {
                 name: dog.name,
                 weight: dog.weight,
-                temperament: dog.temperaments? dog.temperaments.map((t) => t.name) : dog.temperament,
+                temperament: dog.temperament,
                 image:dog.image,
                 id:dog.id
             }
@@ -132,10 +132,11 @@ router.get('/filteredByOrigin/:origin', async (req,res) => {
 router.get('/:idRaza',async (req,res) => {
     const { idRaza } = req.params;
     let dogs = await findAllDogs()
-    const dog = dogs.find(dog => dog.id === Number(idRaza))
+    let dog = dogs.find(dog => dog.id === (Number(idRaza)? Number(idRaza): idRaza))
     if (dog) return res.json(dog)
     return res.status(404).json({message: 'Dog not found'})
 })
+
 router.post('/', async (req,res) =>{
     const { name, minHeight, maxHeight, minWeight, maxWeight, minLife_span, maxLife_span, image, /*userId, */temperament} = req.body;
     try{
@@ -145,7 +146,6 @@ router.post('/', async (req,res) =>{
             if (!existName){
                 return Dog.create({
                     name: name.toLowerCase(),
-                    id: idValue++,
                     height: `${minHeight} - ${maxHeight}`,
                     weight: `${minWeight} - ${maxWeight}`,
                     life_span: `${minLife_span} - ${maxLife_span} years`,
@@ -166,4 +166,19 @@ router.post('/', async (req,res) =>{
     }
 })
 
+router.delete('/:id', async (req,res) => {
+    const { id } = req.params;
+    const deletedDog = await Dog.findOne({
+        where:{
+            id
+        }
+    })
+    deletedDog.removeTemperaments()
+    await Dog.destroy( { 
+        where: {
+            id: id
+        }
+    })
+    res.json({message: 'Dog successfully deleted'})
+})
 module.exports = router;

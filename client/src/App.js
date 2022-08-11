@@ -5,6 +5,7 @@ import Navbar from './Components/Navbar/Navbar';
 import Home from './Components/Home/Home';
 import DogDetail from './Components/DogDetail/DogDetail';
 import CreateDog from './Components/CreateDog/CreateDog';
+import EditDog from './Components/EditDog/EditDog';
 
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
       </Route>
       <Route path='/createDog'>
         <CreateDog/>
+      </Route>
+      <Route path='/editDog/:id'>
+        <EditDog/>
       </Route>
       </div>
   );

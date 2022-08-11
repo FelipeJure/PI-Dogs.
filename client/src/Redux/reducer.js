@@ -7,7 +7,8 @@ import {
     FILTER_BY_ORIGIN,
     ORDER_BY_NAME,
     ORDER_BY_WEIGHT,
-    POST_DOG
+    POST_DOG,
+    DELETE_DOG
 } from "./actions";
 
 const initialState = {
@@ -70,11 +71,31 @@ export default function rootReducer (state = initialState, action){
             }
         case FILTER_BY_ORIGIN:
             let origin
-            if(action.payload.length) origin = action.payload
+            let originTemperaments = state.temperaments
+            if(action.payload.length) {
+                origin = action.payload
+                if(action.filter === 'created'){
+                    let someTemp = []
+                    someTemp = action.payload.reduce((prev,curr) => {
+                        if (curr.temperament) return prev.concat(curr.temperament)
+                    }, [])
+                    const setTemperaments = new Set (someTemp)
+                    const arrayTemperaments = Array.from(setTemperaments)
+                    originTemperaments = []
+                    for(let i = 0; i < arrayTemperaments.length; i++){
+                        for(let j = 0; j < state.temperaments.length; j++){
+                            if (arrayTemperaments[i] === state.temperaments[j].name) originTemperaments.push(state.temperaments[j])
+                        }
+                    } 
+                    originTemperaments.sort((a,b)=> (a.name > b.name ? 1 : -1))
+                }
+            }
             else origin = {message:"Create one dog!"}
             return {
                 ...state,
-                allDogs:origin
+                allDogs:origin,
+                alwaysAllDogs: origin,
+                specificTemperaments: originTemperaments
             }
         case ORDER_BY_NAME:
             let orderDogs = action.payload==='A-Z'? state.allDogs.sort((a,b) => {
@@ -126,6 +147,12 @@ export default function rootReducer (state = initialState, action){
         case POST_DOG:
             return {
                 ...state,   
+            }
+        case DELETE_DOG:
+            return {
+                ...state,
+                allDogs: action.payload,
+                alwaysAllDogs: action.payload
             }
         default: 
         return state

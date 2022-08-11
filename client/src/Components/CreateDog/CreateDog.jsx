@@ -49,7 +49,8 @@ export default function CreateDog() {
     temperament: [],
   });
   const [errors, setErrors] = useState({});
-  const [boolean, setBoolean] = useState(true)
+  const [boolean, setBoolean] = useState(true);
+  const [showResponse, setShowResponse] = useState(false)
   useEffect(() => {
     dispatch(getTemperaments());
     dispatch(getAllDogs());
@@ -110,12 +111,9 @@ export default function CreateDog() {
       temperament: [],
     });
     setTemperament([]);
-    let select = document.querySelector("#temperament");
-    select.value = "-";
-    let responseComponent = document.getElementsByClassName("response")[0];
-    responseComponent.style.display = "flex";
+    setShowResponse(true)
     setTimeout(() => {
-      responseComponent.style.display = "none";
+      setShowResponse(false)
       history.push("/home");
     }, 2000);
   };
@@ -302,7 +300,7 @@ export default function CreateDog() {
         weight={`${input.minWeight} - ${input.maxWeight}`}
         height={`${input.minHeight} - ${input.maxHeight}`}
       />
-      <div className={`response ${s.resp}`}>
+      <div className={ showResponse? s.show: s.hidden}>
         <Response />
       </div>
     </section>
