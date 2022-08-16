@@ -6,29 +6,7 @@ import { useHistory } from "react-router-dom";
 import PreviewDog from "./PreviewDog/PreviewDog";
 import { MdPets } from "react-icons/md";
 import Response from "./Response/Response";
-
-function validation(input, name, errors, repeated) {
-  if (name !== "image") {
-    if (repeated) return { ...errors, [name]: "This dog already exist" };
-    if (input[name] === "")
-      return { ...errors, [name]: "This input must be completed" };
-    if (Number(input[name]) < 0)
-      return { ...errors, [name]: "Can't put a negative number" };
-    if (name.includes("max")) {
-      let minValue = name.replace("max", "min");
-      minValue = input[minValue];
-      if (Number(input[name]) < minValue && minValue !== "")
-        return { ...errors, [name]: `It must be more than ${minValue}` };
-    }
-    if (name.includes("min")) {
-      let maxValue = name.replace("min", "max");
-      maxValue = input[maxValue];
-      if (Number(input[name]) > maxValue && maxValue !== "")
-        return { ...errors, [name]: `It must be less than ${maxValue}` };
-    }
-  }
-  return { ...errors, [name]: "" };
-}
+import validation from "./ValidationFunction";
 
 export default function CreateDog() {
   const dispatch = useDispatch();
@@ -49,35 +27,33 @@ export default function CreateDog() {
     temperament: [],
   });
   const [errors, setErrors] = useState({});
-  const [disableBtn, setDisableBtn] = useState(true);
-  const [showResponse, setShowResponse] = useState(false)
+  const [showResponse, setShowResponse] = useState(false);
   useEffect(() => {
     dispatch(getTemperaments());
     dispatch(getAllDogs());
   }, []);
-  useEffect(()=>{
-    validateSubmitButton()
-  },[input,temperament])
+
   const handleChange = (e) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
-        });
+    });
     let repeatedDog;
     if (e.target.name === "name")
       repeatedDog = allDogs.find(
         (dog) => dog.name.toLowerCase() === e.target.value.toLowerCase()
       );
-    setErrors(validation(
-            {
+    setErrors(
+      validation(
+        {
           ...input,
           [e.target.name]: e.target.value,
         },
-        e.target.name,
-        errors,
         repeatedDog
-        ));
+      )
+    );
   };
+
   const addTemperament = (e) => {
     if (
       e.target.value !== "-" &&
@@ -89,12 +65,13 @@ export default function CreateDog() {
       });
       setTemperament(() => {
         return [
-        ...temperament,
-        { name: e.target.options[e.target.value].text, id: e.target.value },
-      ]});
+          ...temperament,
+          { name: e.target.options[e.target.value].text, id: e.target.value },
+        ];
+      });
     }
-    
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createDog(input));
@@ -111,12 +88,13 @@ export default function CreateDog() {
       temperament: [],
     });
     setTemperament([]);
-    setShowResponse(true)
+    setShowResponse(true);
     setTimeout(() => {
-      setShowResponse(false)
+      setShowResponse(false);
       history.push("/home");
     }, 2000);
   };
+
   const discartTemperament = (e) => {
     setInput({
       ...input,
@@ -125,22 +103,9 @@ export default function CreateDog() {
     setTemperament(temperament.filter((t) => t.id !== e.target.id));
   };
 
-  const validateSubmitButton = () => {
-    if (
-      errors.name !== "" ||
-      errors.minHeight !== "" ||
-      errors.maxHeight !== "" ||
-      errors.minWeight !== "" ||
-      errors.maxWeight !== "" ||
-      errors.minLife_span !== "" ||
-      errors.maxLife_span !== "" ||
-      input.temperament.length === 0
-    ) {
-      setDisableBtn(true)
-    } else {
-      setDisableBtn(false);
-    }
-  };
+  const desable =
+    Object.keys(errors).length || !input.name || !input.temperament.length;
+
   return (
     <section className={s.section}>
       <form onSubmit={handleSubmit} className={s.form}>
@@ -272,7 +237,7 @@ export default function CreateDog() {
           type="submit"
           id="submit"
           className={s.submit}
-          disabled={disableBtn}
+          disabled={desable}
         >
           <MdPets />
         </button>
@@ -293,7 +258,7 @@ export default function CreateDog() {
         weight={`${input.minWeight} - ${input.maxWeight}`}
         height={`${input.minHeight} - ${input.maxHeight}`}
       />
-      <div className={ showResponse? s.hidden: s.show}>
+      <div className={showResponse ? s.show : s.hidden}>
         <Response />
       </div>
     </section>
