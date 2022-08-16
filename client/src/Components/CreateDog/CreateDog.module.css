@@ -110,3 +110,30 @@
 .hidden{
     display:none;
 }
+
+@media (max-width:1200px) {
+    .section{
+        padding-bottom: 0;
+        align-items: center;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+    .form{
+        width: 30rem;
+    }
+}
+
+@media (max-width:875px) {
+    .section{
+        flex-direction: column;
+    }
+}
+
+@media (max-width:600px) {
+    .form{
+        width: 20rem;
+    }
+    .error{
+        display:inline-block;
+    }
+}

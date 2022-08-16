@@ -24,3 +24,28 @@
     font-size: 2rem;
     margin-top: 0;
 }
+
+@media (max-width:1200px) {
+    .container{
+        height: 50vh;
+        margin-top:1rem;
+    }
+}
+
+@media (max-width:900px) {
+    .container{
+        width: 35rem;
+    }
+}
+
+@media (max-width:600px) {
+    .container{
+        width: 25rem;
+    }
+}
+
+@media (max-width:450px) {
+    .container{
+        width: 20rem;
+    }
+}

@@ -1,8 +1,9 @@
 .container{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-row-gap: 1rem;
     justify-items: center;
+    margin-top:2rem;
 }
 body{
     background-repeat: no-repeat;
@@ -51,5 +52,16 @@ body{
     }
     100%{
         transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 1050px) {
+    .container{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 700px) {
+    .container{
+        grid-template-columns: repeat(1, 1fr);
     }
 }

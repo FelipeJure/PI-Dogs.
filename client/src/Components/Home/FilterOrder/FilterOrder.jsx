@@ -15,31 +15,16 @@ export default function Filter_Order ({temperaments, resetPagination}) {
         origin:'all'
     })
 
-    const handleFilterTemperament = e =>{
-        dispatch(filterByTemperament(e.target.value))
+    const handleChange = e =>{
+        if(e.target.name === 'orderName') dispatch(orderByName(e.target.value))
+        if(e.target.name === 'weight') dispatch(orderByWeight(e.target.value))
+        if(e.target.name === 'temperament') dispatch(filterByTemperament(e.target.value))
+        if(e.target.name === 'breed') dispatch(filterByBreed(e.target.value))
+        if(e.target.name === 'origin') dispatch(filterByOrigin(e.target.value))
         resetPagination()
         setSelect({...select, [e.target.name]: e.target.value})
     }
-    const handleFilterBreed = e =>{
-        resetPagination()
-        dispatch(filterByBreed(e.target.value))
-        setSelect({...select, [e.target.name]: e.target.value})
-    }
-    const handleFilterOrigin = e => {
-        resetPagination()
-        dispatch(filterByOrigin(e.target.value))
-        setSelect({...select, [e.target.name]: e.target.value})
-    }
-    const handleOrderName = e =>{
-        dispatch(orderByName(e.target.value))
-        resetPagination()
-        setSelect({...select, [e.target.name]: e.target.value})
-    }
-    const handleOrderWeight = e =>{
-        resetPagination()
-        dispatch(orderByWeight(e.target.value))
-        setSelect({...select, [e.target.name]: e.target.value})
-    }
+
     const handleReset = ()=>{
         dispatch(getAllDogs())
         resetPagination()
@@ -57,34 +42,34 @@ export default function Filter_Order ({temperaments, resetPagination}) {
         <section className={s.container}>
             <div>
                 <h3>Order by:</h3>
-                <select name="orderName" id="orderName" value={select.orderName} onChange={handleOrderName}>
+                <select name="orderName" id="orderName" value={select.orderName} onChange={handleChange}>
                     <option value='A-Z'>A-Z</option>
                     <option value="Z-A">Z-A</option>
                 </select>
-                <select name="weight" id="weight" value={select.weight} onChange={handleOrderWeight}>
+                <select name="weight" id="weight" value={select.weight} onChange={handleChange}>
                     <option value='-'>Weight</option>
                     <option value="Mayor peso">Heavier</option>
                     <option value="Menor peso">Lighter</option>
                 </select>
             </div>
             <div>
-            <h3>Filter by:</h3>
+                <h3>Filter by:</h3>
                 <span>Temperament</span>
-                <select name="temperament" id="temperament" value={select.temperament} onChange={handleFilterTemperament}>
+                <select name="temperament" id="temperament" value={select.temperament} onChange={handleChange}>
                     <option value="all">All</option>
                     {temperaments?.map(t=>{
                         return <option value={t.name} key={t.id}>{t.name}</option>
                     })}
                 </select>
                 <span>Breed</span>
-                <select name="breed" id="breed" value={select.breed} onChange={handleFilterBreed}>
+                <select name="breed" id="breed" value={select.breed} onChange={handleChange}>
                     <option value="all">All</option>
                     {alwaysAllDogs?.map(dog=>{
                         return <option value={dog.name} key={dog.id}>{dog.name}</option>
                     })}
                 </select>
                 <span>Origin</span>
-                <select name="origin" id="origin" value={select.origin} onChange={handleFilterOrigin}>
+                <select name="origin" id="origin" value={select.origin} onChange={handleChange}>
                     <option value="all">All</option>
                     <option value="API">API dogs</option>
                     <option value="created">Created dogs</option>
