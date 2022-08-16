@@ -32,7 +32,7 @@
     color:bisque;
     position: absolute;
     top: 15%;
-    left: 44%;
+    left: 5%;
     border: none;
     border-radius: 0.2rem;
     background-color: transparent;
@@ -54,7 +54,7 @@
     color:bisque;
     position: absolute;
     top: 15%;
-    left: 50%;
+    left: 40%;
     border: none;
     border-radius: 0.2rem;
     background-color: transparent;
@@ -95,5 +95,35 @@
     }
     100%{
         transform: rotate(360deg);
+    }
+}
+
+@media (max-width:1000px) {
+    .container{
+        flex-direction: column;
+        justify-content: start;
+    }
+    .container .description {
+        text-align: center;
+    }
+    .container .description h1{
+        margin-top: 1rem;
+        margin-bottom: 0.5rem
+    }
+    .imgDog{
+        width: 20rem;
+    }
+    .deleteBtn{
+        top: 30%;
+        left: 75%;
+    }
+    .editBtn{
+        top: 30%;
+        left: 15%;
+    }
+}
+@media (max-width:350px) {
+    .imgDog{
+        width: 90%;
     }
 }

@@ -14,9 +14,10 @@ body{
 }
 
 .notFound{
+    width: 100%;
     position: absolute;
-    top:50%;
-    left:40%;
+    top: 45%;
+    text-align: center;
     color: black;
     z-index: 4;
 }
@@ -31,6 +32,7 @@ body{
     background-repeat: no-repeat;
     background-size: cover; 
     background-attachment: fixed;
+    background-position-x: center;
     background-image: url('https://estaticos.muyinteresante.es/uploads/images/gallery/5b473b075cafe87298abe4b4/perro-escondido.jpg');
 }
 
