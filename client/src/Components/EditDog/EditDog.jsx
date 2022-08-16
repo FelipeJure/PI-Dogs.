@@ -46,8 +46,8 @@ export default function EditDog() {
     id: id?id:null
   });
   const [errors, setErrors] = useState({});
-  const [boolean, setBoolean] = useState(true);
-  const [showResponse, setShowResponse] = useState(true)
+  const [disableBtn, setDisableBtn] = useState(true);
+  const [showResponse, setShowResponse] = useState(false)
 
   useEffect(() => {
     dispatch(getTemperaments());
@@ -102,9 +102,8 @@ export default function EditDog() {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShowResponse(false)
+    setShowResponse(true)
     dispatch(editDog(input))
-    console.log(input)
     setTimeout(() => {
         setInput({
           minHeight: "",
@@ -119,7 +118,7 @@ export default function EditDog() {
           temperament: [],
         });
         setTemperament([]);
-      setShowResponse(true)
+      setShowResponse(false)
       history.push("/home");
     }, 2000);
   };
@@ -140,9 +139,9 @@ export default function EditDog() {
       (errors.minLife_span === "" || !errors.minLife_span) &&
       (errors.maxLife_span === "" || !errors.maxLife_span) 
     ) {
-        setBoolean(false);
+        setDisableBtn(false);
     } else {
-        setBoolean(true);
+        setDisableBtn(true);
     }
   };
 
@@ -152,6 +151,8 @@ export default function EditDog() {
     return <h1>{dog.message}</h1>;
   } else if (dog) {
     return (
+      <>
+      
       <div className={s.two}>
         <section className={s.previus}>
           <h1 className={s.title}>Previus</h1>
@@ -314,17 +315,18 @@ export default function EditDog() {
               type="submit"
               id="submit"
               className={s.submit}
-              disabled={boolean}
+              disabled={disableBtn}
             >
               <MdPets />
             </button>
           </form>
           <h4>*Complete only the inputs that you want to change</h4>
         </section>
-        {/* <div className={showResponse? s.visible : s.hidden}>
-            <Response/>
-        </div> */}
       </div>
+        <div className={showResponse? s.visible : s.hidden }>
+            <Response response={'Dog succesfully modified'}/>
+        </div>
+        </>
     );
   }
 }

@@ -179,7 +179,7 @@ router.delete('/:id', async (req,res) => {
             id: id
         }
     })
-    res.json({message: 'Dog successfully deleted'})
+    res.status(200).json({message: 'Dog successfully deleted'})
 })
 
 router.put('/', async (req,res) => {

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { filterByTemperament, filterByBreed, filterByOrigin, orderByName, orderByWeight } from "../../../Redux/actions";
 import { getAllDogs } from "../../../Redux/actions";
 import s from './FilterOrder.module.css';
 
-export default function Filter_Order ({temperaments, alwaysAllDogs, resetPagination}) {
-    
+export default function Filter_Order ({temperaments, resetPagination}) {
+    const alwaysAllDogs = useSelector(state => state.alwaysAllDogs)
     const dispatch = useDispatch()
     const [select, setSelect] = useState({
         orderName:'A-Z',

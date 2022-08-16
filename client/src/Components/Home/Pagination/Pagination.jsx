@@ -6,7 +6,7 @@ import { IoPlayBackOutline } from "react-icons/io5";
 
 export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage,maxPageNumberLimit, setmaxPageNumberLimit, minPageNumberLimit, setminPageNumberLimit }) {
   const pageNumberLimit = 4;
-  const [status, setStatus] = useState(false);
+  const [statusBtnNext, setStatusBtnNext] = useState(false);
 
   const pageNumber = [];
   for (let i = 0; i < Math.ceil(allDogs / dogsPerPage); i++) {
@@ -20,15 +20,14 @@ export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage
       );
       setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
-      setStatus(false);
+      setStatusBtnNext(false);
       return;
     }
     paginado(currentPage - 1);
     if ((currentPage - 1) % pageNumberLimit === 0) {
-      if(minPageNumberLimit - pageNumberLimit <= 0) setStatus({...status, btnPrev:true});
       setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
-      setStatus(false);
+      setStatusBtnNext(false);
     }
   };
 
@@ -42,7 +41,7 @@ export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage
       setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
       pageNumber.length < maxPageNumberLimit + pageNumberLimit &&
-        setStatus(true);
+        setStatusBtnNext(true);
       return;
     }
     paginado(currentPage + 1);
@@ -50,39 +49,41 @@ export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage
       setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
       pageNumber.length < maxPageNumberLimit + pageNumberLimit &&
-        setStatus(true);
+        setStatusBtnNext(true);
     }
   };
 
   return (
       <section className={s.arrowContainer}>
         {minPageNumberLimit >= 1 ? (
-        <button className={s.arrow} onClick={() => handlePrev(true)} >
-          <IoPlayBackOutline />
-        </button>
+          <>
+            <button className={s.arrow} onClick={() => handlePrev(true)} >
+              <IoPlayBackOutline />
+            </button>
+            <button
+              className={`${s.arrow} ${s.left}`}
+              onClick={() => handlePrev(false)}
+              >
+              <IoPlayOutline />
+            </button>
+          </>
         )
         :
-        <button
-          className={`${s.arrow} ${s.left}`}
-          disabled
-        >
-          <IoPlayOutline />
-        </button>} 
-      {minPageNumberLimit >= 1 ? (
-        <button
-          className={`${s.arrow} ${s.left}`}
-          onClick={() => handlePrev(false)}
-        >
-          <IoPlayOutline />
-        </button>
-      )
-       : 
-       <button
-          className={`${s.arrow} ${s.left}`}
-          disabled
-        >
-          <IoPlayOutline />
-        </button>} 
+        <>
+          <button
+            className={`${s.arrow} ${s.left}`}
+            disabled
+            >
+            <IoPlayOutline />
+          </button>
+          <button
+            className={`${s.arrow} ${s.left}`}
+            disabled
+            >
+            <IoPlayOutline />
+          </button>
+        </>
+        }
       <div className={s.movement}>
         {pageNumber.length &&
           pageNumber.map((number) => {
@@ -125,14 +126,14 @@ export default function Pagination({ dogsPerPage, paginado, allDogs, currentPage
       <button
       className={s.arrow}
         onClick={() => handleNext(false)}
-        disabled={status}
+        disabled={statusBtnNext}
       >
         <IoPlayOutline />
       </button>
       <button
       className={s.arrow}
       onClick={() => handleNext(true)}
-      disabled={status}
+      disabled={statusBtnNext}
       >
         <IoPlayForwardOutline />
       </button>

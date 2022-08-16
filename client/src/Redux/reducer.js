@@ -16,7 +16,7 @@ const initialState = {
     allDogs: [],
     alwaysAllDogs:[],
     temperaments:[],
-    specificTemperaments:null
+    specificTemperaments:null,
 };
 
 export default function rootReducer (state = initialState, action){
@@ -152,11 +152,8 @@ export default function rootReducer (state = initialState, action){
         case DELETE_DOG:
             return {
                 ...state,
-                allDogs: action.payload,
-                alwaysAllDogs: action.payload
             }
         case EDIT_DOG:
-            console.log(action.payload)
             return {
                 ...state,   
             }

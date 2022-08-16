@@ -49,7 +49,7 @@ export default function CreateDog() {
     temperament: [],
   });
   const [errors, setErrors] = useState({});
-  const [boolean, setBoolean] = useState(true);
+  const [disableBtn, setDisableBtn] = useState(true);
   const [showResponse, setShowResponse] = useState(false)
   useEffect(() => {
     dispatch(getTemperaments());
@@ -118,7 +118,6 @@ export default function CreateDog() {
     }, 2000);
   };
   const discartTemperament = (e) => {
-    console.log(e.target.id);
     setInput({
       ...input,
       temperament: input.temperament.filter((t) => t !== Number(e.target.id)),
@@ -137,9 +136,9 @@ export default function CreateDog() {
       errors.maxLife_span !== "" ||
       input.temperament.length === 0
     ) {
-      setBoolean(true)
+      setDisableBtn(true)
     } else {
-      setBoolean(false);
+      setDisableBtn(false);
     }
   };
   return (
@@ -164,7 +163,6 @@ export default function CreateDog() {
             name="minHeight"
             type="number"
             onChange={handleChange}
-            id="minHeight"
             className={errors.minHeight ? s.inputError : null}
             value={input.minHeight}
           />
@@ -173,7 +171,6 @@ export default function CreateDog() {
             name="maxHeight"
             type="number"
             onChange={handleChange}
-            id="maxHeight"
             className={errors.maxHeight ? s.inputError : null}
             value={input.maxHeight}
           />
@@ -191,7 +188,6 @@ export default function CreateDog() {
             name="minWeight"
             type="number"
             onChange={handleChange}
-            id="minWeight"
             className={errors.minWeight ? s.inputError : null}
             value={input.minWeight}
           />
@@ -200,7 +196,6 @@ export default function CreateDog() {
             name="maxWeight"
             type="number"
             onChange={handleChange}
-            id="maxWeight"
             className={errors.maxWeight ? s.inputError : null}
             value={input.maxWeight}
           />
@@ -218,7 +213,6 @@ export default function CreateDog() {
             name="minLife_span"
             type="number"
             onChange={handleChange}
-            id="minLife_span"
             className={errors.minLife_span ? s.inputError : null}
             value={input.minLife_span}
           />
@@ -227,7 +221,6 @@ export default function CreateDog() {
             name="maxLife_span"
             type="number"
             onChange={handleChange}
-            id="maxLife_span"
             className={errors.maxLife_span ? s.inputError : null}
             value={input.maxLife_span}
           />
@@ -279,7 +272,7 @@ export default function CreateDog() {
           type="submit"
           id="submit"
           className={s.submit}
-          disabled={boolean}
+          disabled={disableBtn}
         >
           <MdPets />
         </button>

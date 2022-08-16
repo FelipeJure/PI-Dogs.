@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from 'react-router-dom';
 import { deleteDog } from "../../Redux/actions";
-import s from './DogDetail.module.css'
+import Response from '../CreateDog/Response/Response';
+import s from './DogDetail.module.css';
 
 export default function DogDetail (){
     const [dog, setDog] = useState(undefined);
+    const [showResponse, setShowResponse] = useState(false)
     const dispatch = useDispatch()
     const history = useHistory()
     const { id } = useParams()
@@ -27,7 +29,11 @@ export default function DogDetail (){
 
     const handleDelete = () => {
         dispatch(deleteDog(id))
-        history.push("/home");
+        setShowResponse(true)
+        setTimeout(() => {
+            setShowResponse(false)
+            history.push("/home");
+        }, 2000);
     }
     if (dog === undefined){
         return <div className={s.loader}></div> 
@@ -40,12 +46,15 @@ export default function DogDetail (){
                 {dog.temperaments?<button onClick={handleEdit} className={s.editBtn}>Edit dog</button>: null}
                     {dog.temperaments?<button onClick={handleDelete} className={s.deleteBtn}>Delete dog</button>: null}
                     <h1>{dog.name}</h1>
-                    <p>Weight: <b>{dog.weight} kg</b></p>
                     <p>Height: <b>{dog.height} cm</b></p>
+                    <p>Weight: <b>{dog.weight} kg</b></p>
                     <p>Life Span: <b>{dog.life_span}</b></p>
                     <p>Temperament: <b>{dog.temperament?.join(', ')}</b></p>
                 </aside>
-                <img src={dog.image?dog.image:'https://www.pinclipart.com/picdir/big/532-5327559_dachshund-yorkshire-terrier-puppy-bichon-frise-clip-silueta.png'} alt="Dog not found"/>
+                <img className={s.imgDog} src={dog.image?dog.image:'https://www.pinclipart.com/picdir/big/532-5327559_dachshund-yorkshire-terrier-puppy-bichon-frise-clip-silueta.png'} alt="Dog not found"/>
+                <div className={ showResponse? s.show : s.hidden }>
+                    <Response response={'Dog succesfully removed'}/>
+                </div>
             </section>
         )
     }

@@ -168,9 +168,9 @@
     text-align: start;
 }
 
-s.visible{
+.visible{
     display:flex;
 }
-s.hidden{
+.hidden{
     display:none;
 }

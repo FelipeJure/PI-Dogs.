@@ -5,6 +5,7 @@
     right: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.204);
+    backdrop-filter: blur(0.2rem);
 }
 .text{
     position: absolute;
@@ -12,10 +13,39 @@
     top: 30%;
     left: 42%;
 }
-.container img{
+.imgCreated{
     position: absolute;
     top: 11%;
     left: 40%;
     height: 30rem;
+    border-radius: 0.5rem;
+}
+
+.textDeleted{
+    position: absolute;
+    z-index: 1;
+    top: 30%;
+    left: 38%;
+    font-size: 2rem;
+}
+.textEdited{
+    position: absolute;
+    z-index: 1;
+    top: 17%;
+    left: 36%;
+    font-size: 2rem;
+}
+.imgDeleted{
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    height: 20rem;
+    border-radius: 0.5rem;
+}
+.imgEdited{
+    position: absolute;
+    top: 27%;
+    left: 30%;
+    width: 35rem;
     border-radius: 0.5rem;
 }

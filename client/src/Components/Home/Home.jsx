@@ -9,7 +9,6 @@ import SearchBar from "./SearchBar/SearchBar";
 
 export default function Home() {
   let allDogs = useSelector((state) => state.allDogs);
-  let alwaysAllDogs = useSelector((state) => state.alwaysAllDogs);
   const temperaments = useSelector((state) => state.temperaments);
   const specificTemperaments = useSelector(state => state.specificTemperaments);
   const dispatch = useDispatch();
@@ -52,7 +51,6 @@ export default function Home() {
       <SearchBar page={page} resetPagination={resetPagination}/>
       <FilterOrder
         temperaments={specificTemperaments? specificTemperaments: temperaments}
-        alwaysAllDogs={alwaysAllDogs}
         resetPagination={resetPagination}
       />
       {allDogs.length ? (
@@ -77,11 +75,7 @@ export default function Home() {
               key={dog.id}
               id={dog.id}
               image={dog.image}
-              temperament={
-                dog.temperaments
-                  ? dog.temperaments.map((t) => t.name)
-                  : dog.temperament
-              }
+              temperament={dog.temperament}
               life_span={dog.life_span}
               weight={dog.weight}
               height={dog.height}

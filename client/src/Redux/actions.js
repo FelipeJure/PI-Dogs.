@@ -97,7 +97,7 @@ export function deleteDog (id) {
             method:'DELETE'
         }).then(res => res.json())
         .then(response => {
-            return {type:POST_DOG, payload:response}
+            return {type:DELETE_DOG, payload:response}
         })
         .catch(error => {
             console.error(error)
