@@ -181,7 +181,7 @@ export default function EditDog() {
             />
           </div>
         </section>
-        <section className={s.previus}>
+        <section className={s.current}>
           <h1 className={s.title}>Current</h1>
           <form onSubmit={handleSubmit} className={s.form}>
             <br />
