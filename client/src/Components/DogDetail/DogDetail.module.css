@@ -114,11 +114,11 @@
         width: 20rem;
     }
     .deleteBtn{
-        top: 30%;
+        top: 10%;
         left: 75%;
     }
     .editBtn{
-        top: 30%;
+        top: 10%;
         left: 15%;
     }
 }

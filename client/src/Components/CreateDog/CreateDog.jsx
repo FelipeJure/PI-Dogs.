@@ -293,7 +293,7 @@ export default function CreateDog() {
         weight={`${input.minWeight} - ${input.maxWeight}`}
         height={`${input.minHeight} - ${input.maxHeight}`}
       />
-      <div className={ showResponse? s.show: s.hidden}>
+      <div className={ showResponse? s.hidden: s.show}>
         <Response />
       </div>
     </section>
