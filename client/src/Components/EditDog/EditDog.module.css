@@ -8,8 +8,7 @@
 .title{
     text-align: center;
     font-size: 2.5rem;
-    margin-top: 10%;
-    margin-bottom: 0;
+    margin: 0;
 }
 .container{
     height: 60vh;
@@ -54,4 +53,124 @@
     100%{
         transform: rotate(360deg);
     }
+}
+
+
+.form {
+    width: 75%;
+    padding-left: 1rem;
+    margin-top:1rem;
+    margin-right:auto;
+    margin-left:auto;
+    display: flex;
+    flex-direction: column;
+    color:black;
+    border-radius: 0.2rem;
+    position: relative;
+    box-shadow: 0px -1px 8px 2px black;
+}
+.form input{
+    width: 50%;
+    border-bottom: 2px solid black;
+    color: black;
+    border-top: hidden;
+    border-left: hidden;
+    border-right: hidden;
+    background-color: transparent;
+    outline:none;
+}
+.form div input[type='number']{
+    width: 20%;
+    text-align: center;
+}
+.form div label{
+    display:block;
+}
+.form input[type='submit']{
+    width:40%;
+    display:flex;
+    justify-content: center;
+    align-self: flex-end;
+}
+.containerTemps{
+    display:flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+.temperamentGroup{
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+.x{
+    position: absolute;
+    font-size: 2.5rem;
+    top:-1.2rem;
+    left: 30%;
+    color: rgb(203, 18, 18);
+    cursor:pointer;
+    opacity: 0;
+}
+.temperaments{
+    font-size: 0.8rem;
+    cursor:pointer;
+}
+.temperamentGroup:hover .x{
+    opacity: 1;
+}
+.form select{
+    width:50%;
+    background-color: #625a7f;
+    color: bisque;
+}
+.form select::-webkit-scrollbar {
+    width: 8px;
+}
+.form select::-webkit-scrollbar-track {
+    background-color: #625a7f;
+}
+.form select::-webkit-scrollbar-thumb {
+    background-color: bisque;   
+    border-radius: 20px;      
+}
+.error{
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #d50606;
+    padding-left: 0.5rem;
+}
+.inputError{
+    border-bottom:2px solid #d50606!important
+}
+
+.submit{
+    width: 3rem;
+    height: 3.5rem;
+    position: absolute;
+    right: 4%;
+    bottom: 1%;
+    background-color: transparent;
+    font-size: 3rem;
+    border: none;
+    cursor: pointer;
+}
+
+.previus h4{
+    text-align: center;
+    color: black;
+    margin-top:0.5rem;
+    margin-bottom:0;
+}
+
+.previus form div h4{
+    text-align: start;
+}
+
+s.visible{
+    display:flex;
+}
+s.hidden{
+    display:none;
 }

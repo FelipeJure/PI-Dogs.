@@ -181,4 +181,63 @@ router.delete('/:id', async (req,res) => {
     })
     res.json({message: 'Dog successfully deleted'})
 })
+
+router.put('/', async (req,res) => {
+    let { minHeight, maxHeight, minWeight, maxWeight, minLife_span, maxLife_span, image, temperament, id} = req.body;
+    minHeight = Number(minHeight)
+    maxHeight = Number(maxHeight)
+    minWeight = Number(minWeight)
+    maxWeight = Number(maxWeight)
+    minLife_span = Number(minLife_span)
+    maxLife_span = Number(maxLife_span)
+
+    let dog = await Dog.findOne({
+        where:{
+            id:id
+        }
+    })
+    if(temperament.length) dog.setTemperaments(temperament)
+    dog = dog.toJSON()
+    let minValueHeight = Number(dog.height.split(' - ')[0])
+    let maxValueHeight = Number(dog.height.split(' - ')[1])
+    if(minHeight && maxHeight) Dog.update({height: `${minHeight} - ${maxHeight}`},{where: { id } })
+    else {
+        if(minHeight){
+            if(minHeight<=maxValueHeight) Dog.update({height: `${minHeight} - ${maxValueHeight}`},{where: { id } }) 
+            else return res.status(404).json({message: `In height ${minHeight} must be less than ${maxValueHeight}`})
+        }
+        if(maxHeight){
+            if(maxHeight>=minValueHeight)  Dog.update({height: `${minValueHeight} - ${maxHeight}`},{where: { id } }) 
+            else return res.status(404).json({message: `In height ${maxHeight} must be more than ${minValueHeight}`})
+        }
+    }
+    let minValueWeight = Number(dog.height.split(' - ')[0])
+    let maxValueWeight = Number(dog.height.split(' - ')[1])
+    if(minWeight && maxWeight) Dog.update({weight: `${minWeight} - ${maxWeight}`},{where: { id } })
+    else {
+        if(minWeight){
+            if(minWeight<=maxValueWeight) Dog.update({weight:`${minWeight} - ${maxValueWeight}`},{where: { id } }) 
+            else return res.status(404).json({message: `In weight ${minWeight} must be less than ${maxValueWeight}`})
+        }
+        if(maxWeight){
+            if(maxWeight>=minValueWeight) Dog.update({weight:`${minValueWeight} - ${maxWeight}`},{where: { id } })
+            else return res.status(404).json({message: `In weight ${maxWeight} must be more than ${minValueWeight}`})
+        }
+    }
+    let minValueLifeSpan = Number(dog.life_span.split(' years')[0].split(' - ')[0])
+    let maxValueLifeSpan = Number(dog.life_span.split(' years')[0].split(' - ')[1])
+    if(minLife_span && maxLife_span) Dog.update({life_span: `${minLife_span} - ${maxLife_span} years`},{where: { id } })
+    else {
+        if(minLife_span){
+            if(minLife_span<=maxValueLifeSpan) Dog.update({life_span:`${minLife_span} - ${maxValueLifeSpan} years`},{where: { id } })
+            else return res.status(404).json({message: `In life_span ${minLife_span} must be less than ${maxValueLifeSpan}`})
+        }
+        if(maxLife_span){
+            if(maxLife_span>=minValueLifeSpan) Dog.update({life_span:`${minValueLifeSpan} - ${maxLife_span} years`},{where: { id } })
+            else return res.status(404).json({message: `In life_span ${maxLife_span} must be more than ${minValueLifeSpan}`})
+        }
+    }
+    if(image) Dog.update({image},{where: { id } })
+    res.json({message: 'Dog successfully edited'})
+})
 module.exports = router;

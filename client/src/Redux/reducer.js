@@ -8,7 +8,8 @@ import {
     ORDER_BY_NAME,
     ORDER_BY_WEIGHT,
     POST_DOG,
-    DELETE_DOG
+    DELETE_DOG,
+    EDIT_DOG
 } from "./actions";
 
 const initialState = {
@@ -153,6 +154,11 @@ export default function rootReducer (state = initialState, action){
                 ...state,
                 allDogs: action.payload,
                 alwaysAllDogs: action.payload
+            }
+        case EDIT_DOG:
+            console.log(action.payload)
+            return {
+                ...state,   
             }
         default: 
         return state

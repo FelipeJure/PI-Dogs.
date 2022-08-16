@@ -8,6 +8,7 @@ export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const ORDER_BY_WEIGHT = 'ORDER_BY_WEIGHT';
 export const POST_DOG = 'POST_DOG';
 export const DELETE_DOG = 'DELETE_DOG';
+export const EDIT_DOG = 'EDIT_DOG';
 
 export function getAllDogs (){
     return function (dispatch){
@@ -100,6 +101,26 @@ export function deleteDog (id) {
         })
         .catch(error => {
             console.error(error)
+        })
+    }
+}
+
+export function editDog (payload) {
+    return async function (){
+        return fetch('http://localhost:3001/dogs', {
+            method:'PUT',
+            body: JSON.stringify(payload),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+        .then(response => {
+            console.log(response)
+            return {type:EDIT_DOG, payload:response}
+        })
+        .catch(reason => {
+            console.log('HOLAAAAAAAAAAAA')
+            return {type:EDIT_DOG, payload:reason}
         })
     }
 }
