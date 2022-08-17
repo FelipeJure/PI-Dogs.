@@ -17,7 +17,8 @@
     flex-direction: column;
     border-radius: 0.2rem;
     position: relative;
-    box-shadow: 0px -1px 8px 2px black;
+    background-color: #000000a8;
+    box-shadow: 0px -1px 8px 2px white;
 }
 .form input{
     width: 50%;
@@ -97,6 +98,7 @@
 .submit{
     width: 3rem;
     height: 3.5rem;
+    color: bisque;
     position: absolute;
     right: 4%;
     bottom: 1%;
@@ -104,6 +106,28 @@
     font-size: 3rem;
     border: none;
     cursor: pointer;
+}
+.submit:enabled{
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%{
+        transform: scale(1.1);
+    }
+    50%{
+        transform: scale(.8);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+
+
+
+.submit:disabled{
+    color: rgba(255, 228, 196, 0.41);
 }
 .show{
     display:flex;

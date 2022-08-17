@@ -1,19 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterByTemperament, filterByBreed, filterByOrigin, orderByName, orderByWeight } from "../../../Redux/actions";
-import { getAllDogs } from "../../../Redux/actions";
+import { filterByTemperament, filterByBreed, filterByOrigin, orderByName, orderByWeight, orderByHeight } from "../../../Redux/actions";
 import s from './FilterOrder.module.css';
 
-export default function Filter_Order ({temperaments, resetPagination}) {
+export default function Filter_Order ({temperaments, resetPagination, select, setSelect}) {
     const alwaysAllDogs = useSelector(state => state.alwaysAllDogs)
     const dispatch = useDispatch()
-    const [select, setSelect] = useState({
-        orderName:'A-Z',
-        weight: '-',
-        temperament: 'all',
-        breed:'all',
-        origin:'all'
-    })
 
     const handleChange = e =>{
         if(e.target.name === 'orderName') dispatch(orderByName(e.target.value))
@@ -21,24 +13,13 @@ export default function Filter_Order ({temperaments, resetPagination}) {
         if(e.target.name === 'temperament') dispatch(filterByTemperament(e.target.value))
         if(e.target.name === 'breed') dispatch(filterByBreed(e.target.value))
         if(e.target.name === 'origin') dispatch(filterByOrigin(e.target.value))
+        if(e.target.name === 'height') dispatch(orderByHeight(e.target.value))
         resetPagination()
         setSelect({...select, [e.target.name]: e.target.value})
     }
 
-    const handleReset = ()=>{
-        dispatch(getAllDogs())
-        resetPagination()
-        setSelect({
-            orderName:'A-Z',
-            weight: '-',
-            temperament: 'all',
-            breed:'all',
-            origin:'all'
-        })
-    }
     return (
         <>
-        <button onClick={handleReset} className={s.btnReset}>Reset dogs</button>
         <section className={s.container}>
             <div>
                 <h3>Order by:</h3>
@@ -50,6 +31,11 @@ export default function Filter_Order ({temperaments, resetPagination}) {
                     <option value='-'>Weight</option>
                     <option value="Mayor peso">Heavier</option>
                     <option value="Menor peso">Lighter</option>
+                </select>
+                <select name="height" id="height" value={select.height} onChange={handleChange}>
+                    <option value='-'>Height</option>
+                    <option value="large">Large</option>
+                    <option value="small">Small</option>
                 </select>
             </div>
             <div>

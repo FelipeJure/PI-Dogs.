@@ -2,7 +2,7 @@ import React from "react";
 import s from './Card.module.css';
 import { Link } from 'react-router-dom';
 
-export default function Card ({name, id, image, temperament, weight }){
+export default function Card ({name, id, image, temperament, weight, height }){
     return (
         <Link to={`/dogs/${id}`}>
             <div className={`${s.container}`}>
@@ -11,6 +11,7 @@ export default function Card ({name, id, image, temperament, weight }){
                 </div>
                 <div className={`${s.flipFace} ${s.back}`}>
                     <h2>{name}</h2>
+                    <p>Height: {height}cm</p>
                     <p>Weight: {weight}kg</p>
                     <p>Temperament: {temperament?.join(', ')}</p>
                 </div>

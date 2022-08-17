@@ -9,7 +9,8 @@ import {
     ORDER_BY_WEIGHT,
     POST_DOG,
     DELETE_DOG,
-    EDIT_DOG
+    EDIT_DOG,
+    ORDER_BY_HEIGHT
 } from "./actions";
 
 const initialState = {
@@ -144,6 +145,39 @@ export default function rootReducer (state = initialState, action){
             return{
                 ...state,
                 allDogs: averageWeight,
+            }
+        case ORDER_BY_HEIGHT:
+            let averageHeight = state.allDogs.map(dog =>{
+                dog.height = dog.height.split(' - ')
+                let minHeight = dog.height[0] === 'NaN'?10:Number(dog.height[0])
+                let maxHeight
+                if(dog.height[1]){
+                    if (dog.height[1]=== 'NaN') maxHeight = 10
+                    else maxHeight = Number(dog.height[1])
+                }
+                else maxHeight = minHeight
+                dog.middleHeight = (minHeight + maxHeight) / 2
+                dog.height = dog.height.join(' - ')
+                return dog
+            })
+            averageHeight = action.payload === 'small'? 
+                averageHeight.sort((a,b) => {
+                    if(a.middleHeight>b.middleHeight) return 1
+                    if(a.middleHeight<b.middleHeight) return -1
+                    return 0
+                })
+            : 
+                action.payload === 'large'?
+                    averageHeight.sort((a,b) => {
+                        if(a.middleHeight>b.middleHeight) return -1
+                        if(a.middleHeight<b.middleHeight) return 1
+                        return 0
+                    })
+                : 
+                averageHeight
+            return{
+                ...state,
+                allDogs: averageHeight,
             }
         case POST_DOG:
             return {

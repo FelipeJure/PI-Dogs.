@@ -10,8 +10,19 @@ import SearchBar from "./SearchBar/SearchBar";
 export default function Home() {
   let allDogs = useSelector((state) => state.allDogs);
   const temperaments = useSelector((state) => state.temperaments);
-  const specificTemperaments = useSelector(state => state.specificTemperaments);
+  const specificTemperaments = useSelector(
+    (state) => state.specificTemperaments
+  );
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+  const [select, setSelect] = useState({
+    orderName: "A-Z",
+    weight: "-",
+    temperament: "all",
+    breed: "all",
+    origin: "all",
+    height: "-",
+  });
   const [page, setPage] = useState({
     currentPage: 1,
     dogsPerPage: 8,
@@ -46,13 +57,40 @@ export default function Home() {
     setminPageNumberLimit(0);
     setmaxPageNumberLimit(4);
   };
+  const handleShowFilters = () => {
+    if (show) setShow(false);
+    else setShow(true);
+  };
+  const handleReset = () => {
+    dispatch(getAllDogs());
+    resetPagination();
+    setSelect({
+      orderName: "A-Z",
+      weight: "-",
+      temperament: "all",
+      breed: "all",
+      origin: "all",
+    });
+  };
   return (
     <div>
-      <SearchBar page={page} resetPagination={resetPagination}/>
-      <FilterOrder
-        temperaments={specificTemperaments? specificTemperaments: temperaments}
-        resetPagination={resetPagination}
-      />
+      <SearchBar page={page} resetPagination={resetPagination} />
+      <button onClick={handleReset} className={s.btnReset}>
+        Reset dogs
+      </button>
+      <div className={`${s.divFilter} ${show ? s.show : s.hidden}`}>
+        <FilterOrder
+          temperaments={
+            specificTemperaments ? specificTemperaments : temperaments
+          }
+          resetPagination={resetPagination}
+          select={select}
+          setSelect={setSelect}
+        />
+      </div>
+      <button onClick={handleShowFilters} className={s.burguerButton}>
+        <span className={s.burguerForm}></span>
+      </button>
       {allDogs.length ? (
         <Pagination
           dogsPerPage={page.dogsPerPage}

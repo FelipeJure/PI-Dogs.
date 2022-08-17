@@ -9,6 +9,14 @@ export const ORDER_BY_WEIGHT = 'ORDER_BY_WEIGHT';
 export const POST_DOG = 'POST_DOG';
 export const DELETE_DOG = 'DELETE_DOG';
 export const EDIT_DOG = 'EDIT_DOG';
+export const ORDER_BY_HEIGHT = 'ORDER_BY_HEIGHT';
+
+export function orderByHeight (height) {
+    return {
+        type: ORDER_BY_HEIGHT,
+        payload: height
+    }
+}
 
 export function getAllDogs (){
     return function (dispatch){

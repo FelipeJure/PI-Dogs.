@@ -23,7 +23,6 @@ export default function CreateDog() {
     minLife_span: "",
     maxLife_span: "",
     image: "",
-    // userId,
     temperament: [],
   });
   const [errors, setErrors] = useState({});
@@ -84,7 +83,6 @@ export default function CreateDog() {
       minLife_span: "",
       maxLife_span: "",
       image: "",
-      // userId,
       temperament: [],
     });
     setTemperament([]);

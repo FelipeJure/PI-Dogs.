@@ -20,20 +20,9 @@
 const fetch = require('node-fetch');
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const { User, Temperament } = require('./src/db.js');
+const { Temperament } = require('./src/db.js');
 
 const addToDb = async () => {
-  const [admin,created] = await User.findOrCreate ({
-    where: { 
-      email: 'felipe.jure05@gmail.com'
-    },
-    defaults: { 
-      name: 'felipe',
-      password: 1234,
-      access: 'admin'
-    }
-  })
-  if (created){
       let dogs = await fetch('https://api.thedogapi.com/v1/breeds')
       dogs = await dogs.json()
       let temperaments = []
@@ -50,7 +39,7 @@ const addToDb = async () => {
           }
         })
       })
-  }
+  
 }
 
 // Syncing all the models at once.

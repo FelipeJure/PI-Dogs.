@@ -35,7 +35,6 @@
 }
 .current h4{
     text-align: center;
-    color: black;
 }
 .form h4{
     text-align: start;
@@ -70,15 +69,15 @@
     margin-left:auto;
     display: flex;
     flex-direction: column;
-    color:black;
     border-radius: 0.2rem;
     position: relative;
-    box-shadow: 0px -1px 8px 2px black;
+    background-color: #000000a8;
+    box-shadow: 0px -1px 8px 2px white;
 }
 .form input{
     width: 50%;
-    border-bottom: 2px solid black;
-    color: black;
+    border-bottom: 2px solid bisque;
+    color: bisque;
     border-top: hidden;
     border-left: hidden;
     border-right: hidden;
@@ -157,10 +156,14 @@
     position: absolute;
     right: 4%;
     bottom: 1%;
+    color:bisque;
     background-color: transparent;
     font-size: 3rem;
     border: none;
     cursor: pointer;
+}
+.submit:disabled{
+    color: rgba(255, 228, 196, 0.41);
 }
 
 .previus h4{
