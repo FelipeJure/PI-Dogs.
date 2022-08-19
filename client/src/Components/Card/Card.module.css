@@ -15,6 +15,7 @@
 .container img{
     height: 13rem;
     border-radius: 0.5rem;
+    box-shadow: 0px -1px 12px 3px black;
 } 
 .flipFace{
     display: flex;

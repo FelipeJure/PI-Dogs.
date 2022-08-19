@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Card from "../Card/Card";
 import { getAllDogs, getTemperaments } from "../../Redux/actions";
+import PropagateLoader from "react-spinners/PropagateLoader";
 import s from "./Home.module.css";
 import Pagination from "./Pagination/Pagination";
 import FilterOrder from "./FilterOrder/FilterOrder";
@@ -72,6 +73,14 @@ export default function Home() {
       origin: "all",
     });
   };
+
+  const override = {
+    display: "block",
+    paddingTop: "40vh",
+    paddingLeft: "50%",
+    borderColor: "black",
+  };
+
   return (
     <div>
       <SearchBar page={page} resetPagination={resetPagination} />
@@ -103,7 +112,14 @@ export default function Home() {
           paginado={paginado}
         />
       ) : (
-        <div className={s.loader}></div>
+        <div className="sweet-loading">
+          <PropagateLoader
+            color="black"
+            loading={true}
+            cssOverride={override}
+            size={20}
+          />
+        </div>
       )}
       <div className={s.container}>
         {currentDogs?.map((dog) => {

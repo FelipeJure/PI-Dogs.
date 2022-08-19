@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTemperaments, editDog } from "../../Redux/actions";
 import { MdPets } from "react-icons/md";
+import PropagateLoader from "react-spinners/PropagateLoader";
 import s from "./EditDog.module.css";
 import Response from "../CreateDog/Response/Response";
 
@@ -145,8 +146,24 @@ export default function EditDog() {
     }
   };
 
+  const override = {
+    display: "block",
+    paddingTop: "40vh",
+    paddingLeft: "50%",
+    borderColor: "black",
+  };
+
   if (dog === undefined) {
-    return <div className={s.loader}></div>;
+    return (
+      <div className="sweet-loading">
+        <PropagateLoader
+          color="black"
+          loading={true}
+          cssOverride={override}
+          size={20}
+        />
+      </div>
+    )
   } else if (dog === null || dog.message) {
     return <h1>{dog.message}</h1>;
   } else if (dog) {
