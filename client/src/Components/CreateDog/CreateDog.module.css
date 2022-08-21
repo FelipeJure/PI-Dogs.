@@ -90,6 +90,7 @@
     font-weight: 600;
     color: #d50606;
     padding-left: 0.5rem;
+    display:block;
 }
 .inputError{
     border-bottom:2px solid #d50606!important
@@ -157,8 +158,5 @@
 @media (max-width:600px) {
     .form{
         width: 20rem;
-    }
-    .error{
-        display:inline-block;
     }
 }

@@ -55,7 +55,7 @@ export default function CreateDog() {
         },
         e.target.name,
         errors,
-        repeatedDog
+        repeatedDog,
       )
     );
   };
