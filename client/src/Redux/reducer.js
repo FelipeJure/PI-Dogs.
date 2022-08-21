@@ -189,7 +189,7 @@ export default function rootReducer (state = initialState, action){
             }
         case EDIT_DOG:
             return {
-                ...state,   
+                ...state, 
             }
         default: 
         return state

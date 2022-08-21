@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import PreviewDog from "./PreviewDog/PreviewDog";
 import { MdPets } from "react-icons/md";
 import Response from "./Response/Response";
-import validation from "./ValidationFunction";
+import validation from "./ValidationCreateFcn";
 
 export default function CreateDog() {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ export default function CreateDog() {
   const history = useHistory();
   const temperaments = useSelector((state) => state.temperaments);
   const [temperament, setTemperament] = useState([]);
+  const [disableBtn, setDisableBtn] = useState(true)
   const [input, setInput] = useState({
     name: "",
     minHeight: "",
@@ -32,6 +33,10 @@ export default function CreateDog() {
     dispatch(getAllDogs());
   }, []);
 
+  useEffect(() => {
+    validateSubmitButton();
+  }, [input, temperament]);
+
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -48,6 +53,8 @@ export default function CreateDog() {
           ...input,
           [e.target.name]: e.target.value,
         },
+        e.target.name,
+        errors,
         repeatedDog
       )
     );
@@ -101,8 +108,23 @@ export default function CreateDog() {
     setTemperament(temperament.filter((t) => t.id !== e.target.id));
   };
 
-  const desable =
-    Object.keys(errors).length || !input.name || !input.temperament.length;
+  const validateSubmitButton = () => {
+    if (
+      errors.name !== ""  ||
+      errors.minHeight !== ""  ||
+      errors.maxHeight !== ""  ||
+      errors.minWeight !== ""  ||
+      errors.maxWeight !== ""  ||
+      errors.minLife_span !== ""  ||
+      errors.maxLife_span !== ""  ||
+      !input.temperament.length
+    ) {
+      setDisableBtn(true);
+    } else {
+      setDisableBtn(false);
+    }
+  };
+
 
   return (
     <section className={s.section}>
@@ -235,7 +257,7 @@ export default function CreateDog() {
           type="submit"
           id="submit"
           className={s.submit}
-          disabled={desable}
+          disabled={disableBtn}
         >
           <MdPets />
         </button>

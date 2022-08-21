@@ -37,7 +37,7 @@ export function getDog (name){
                 dispatch({ type: GET_DOG, payload: dogs })
             })
             .catch ((error) => {
-                dispatch({ type: GET_DOG, payload: error })
+                console.log(error)
             })
         )
     }
@@ -129,12 +129,12 @@ export function editDog (payload) {
         //         'Content-Type': 'application/json'
         //     }
         // }
-        ).then(res => res.data)
+        )
         .then(response => {
-            return {type:EDIT_DOG, payload:response}
+            return {type:EDIT_DOG, payload:response.data}
         })
-        .catch(reason => {
-            return {type:EDIT_DOG, payload:reason}
+        .catch(error => {
+            console.log(error)
         })
     }
 }
