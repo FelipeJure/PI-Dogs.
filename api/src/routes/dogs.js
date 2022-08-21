@@ -96,7 +96,7 @@ router.get("/", async (req, res) => {
         });
         return res.json(dogs);
       }
-      res.status(404).json({ message: "Dog not found" });
+      res.json({ message: "Dog not found" });
     }
     dogs = dogs.map((dog) => {
       return {

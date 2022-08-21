@@ -12,9 +12,11 @@ export default function SearchBar ({ resetPagination }){
     }
     const onSearch = (e) => {
         e.preventDefault()
-        dispatch(getDog(input))
-        .then(()=>resetPagination())
-        setInput('')
+        if(input !== ''){
+            dispatch(getDog(input))
+            .then(()=>resetPagination())
+            setInput('')
+        }
     }
     return (
         <form className={s.container}> 

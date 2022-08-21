@@ -36,6 +36,9 @@ export function getDog (name){
             .then(dogs => {
                 dispatch({ type: GET_DOG, payload: dogs })
             })
+            .catch ((error) => {
+                dispatch({ type: GET_DOG, payload: error })
+            })
         )
     }
 }
