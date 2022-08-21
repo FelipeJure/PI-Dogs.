@@ -6,6 +6,7 @@ import { MdPets } from "react-icons/md";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import s from "./EditDog.module.css";
 import Response from "../CreateDog/Response/Response";
+import axios from "axios";
 
 function validation(input, name, errors) {
   if (name !== "image") {
@@ -52,8 +53,8 @@ export default function EditDog() {
 
   useEffect(() => {
     dispatch(getTemperaments());
-    fetch(`http://localhost:3001/dogs/${id}`)
-      .then((res) => res.json())
+    axios.get(`/dogs/${id}`)
+      .then((res) => res.data)
       .then((dog) => {
         setDog(dog);
       })
