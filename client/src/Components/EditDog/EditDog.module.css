@@ -36,10 +36,13 @@
 .current h4{
     text-align: center;
     color: black;
+    margin-top: 0.5rem;
 }
 .form h4{
     text-align: start;
     color: bisque;
+    margin-top:0.6rem;
+    margin-bottom: 0;
 }
 .loader{
     position: absolute;

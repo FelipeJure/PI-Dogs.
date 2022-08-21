@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import axios from 'axios';
 import { deleteDog } from "../../Redux/actions";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import swal from "sweetalert";
@@ -14,8 +15,8 @@ export default function DogDetail() {
   const history = useHistory();
   const { id } = useParams();
   useEffect(() => {
-    fetch(`http://localhost:3001/dogs/${id}`)
-      .then((res) => res.json())
+    axios.get(`/dogs/${id}`)
+      .then((res) => res.data)
       .then((dog) => {
         setDog(dog);
       })
@@ -45,7 +46,7 @@ export default function DogDetail() {
           history.push("/home");
         }, 2000);
       } else {
-        swal("Your dog is safe!");
+        swal("This dog is safe!");
       }
     });
   };

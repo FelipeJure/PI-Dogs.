@@ -1,3 +1,4 @@
+import axios from 'axios';
 export const GET_ALL_DOGS = 'GET_ALL_DOGS';
 export const GET_DOG = 'GET_DOG';
 export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS';
@@ -21,8 +22,8 @@ export function orderByHeight (height) {
 export function getAllDogs (){
     return function (dispatch){
         return (
-            fetch('http://localhost:3001/dogs')
-            .then(response => response.json())
+            axios.get('/dogs')
+            .then(response => response.data)
             .then(allDogs => dispatch({ type: GET_ALL_DOGS, payload: allDogs }))
         )
     }
@@ -30,8 +31,8 @@ export function getAllDogs (){
 export function getDog (name){
     return function (dispatch){
         return (
-            fetch(`http://localhost:3001/dogs?name=${name}`)
-            .then(response => response.json())
+            axios.get(`/dogs?name=${name}`)
+            .then(response => response.data)
             .then(dogs => {
                 dispatch({ type: GET_DOG, payload: dogs })
             })
@@ -41,8 +42,8 @@ export function getDog (name){
 export function getTemperaments(){
     return function (dispatch){
         return (
-            fetch('http://localhost:3001/temperaments')
-            .then(response => response.json())
+            axios.get('/temperaments')
+            .then(response => response.data)
             .then(temperaments => dispatch({ type: GET_TEMPERAMENTS, payload: temperaments }))
         )
     }
@@ -62,8 +63,8 @@ export function filterByBreed (breed){
 export function filterByOrigin (origin){
     return function (dispatch){
         return (
-            fetch(`http://localhost:3001/dogs/filteredByOrigin/${origin}`)
-            .then(response => response.json())
+            axios.get(`/dogs/filteredByOrigin/${origin}`)
+            .then(response => response.data)
             .then(dogs => {
                 dispatch({ type: FILTER_BY_ORIGIN, payload: dogs, filter:origin })})
         )
@@ -83,13 +84,15 @@ export function orderByWeight (weight){
 }
 export function createDog (payload){
     return async function (){
-        return fetch('http://localhost:3001/dogs', {
-            method:'POST',
-            body: JSON.stringify(payload),
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json())
+        return axios.post('/dogs', payload
+        // {
+        //     method:'POST',
+        //     body: JSON.stringify(payload),
+        //     headers:{
+        //         'Content-Type': 'application/json'
+        //     }
+        // }
+        ).then(res => res.data)
         .then(response => {
             return {type:POST_DOG, payload:response}
         })
@@ -101,9 +104,9 @@ export function createDog (payload){
 
 export function deleteDog (id) {
     return async function (){
-        return fetch(`http://localhost:3001/dogs/${id}`, {
+        return axios.delete(`/dogs/${id}`, {
             method:'DELETE'
-        }).then(res => res.json())
+        }).then(res => res.data)
         .then(response => {
             return {type:DELETE_DOG, payload:response}
         })
@@ -115,19 +118,19 @@ export function deleteDog (id) {
 
 export function editDog (payload) {
     return async function (){
-        return fetch('http://localhost:3001/dogs', {
-            method:'PUT',
-            body: JSON.stringify(payload),
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json())
+        return axios.put('/dogs', payload
+        // {
+        //     method:'PUT',
+        //     body: JSON.stringify(payload),
+        //     headers:{
+        //         'Content-Type': 'application/json'
+        //     }
+        // }
+        ).then(res => res.data)
         .then(response => {
-            console.log(response)
             return {type:EDIT_DOG, payload:response}
         })
         .catch(reason => {
-            console.log('HOLAAAAAAAAAAAA')
             return {type:EDIT_DOG, payload:reason}
         })
     }
