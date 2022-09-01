@@ -14,7 +14,7 @@ let sequelize =
         `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}`,
         { logging: false, native: false }
       );
-
+// chau heroku
 
 // const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/dogs`, {
 //   logging: false, // set to console.log to see the raw SQL queries
