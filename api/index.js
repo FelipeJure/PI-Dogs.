@@ -44,7 +44,7 @@ const addToDb = async () => {
 
 // Syncing all the models at once.
 conn.sync({ force: false }).then(() => {
-  server.listen(process.env.PGPORT, () => {
+  server.listen(process.env.PORT, () => {
       console.log('%s listening at 3001');
       addToDb() 
       // eslint-disable-line no-console
