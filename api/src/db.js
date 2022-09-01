@@ -4,14 +4,35 @@ const fs = require('fs');
 const fetch = require('node-fetch')
 const path = require('path');
 const {
-  PGUSER, PGPASSWORD, PGHOST, DATABASE_URL, PGPORT, PGDATABASE
+  PGUSER, PGPASSWORD, PGHOST, PGPORT, PGDATABASE
 } = process.env;
 
 let sequelize =
   process.env.NODE_ENV === "production"
-    ? new Sequelize (DATABASE_URL)
+    ? new Sequelize({
+        database: PGDATABASE,
+        dialect: "postgres",
+        host: PGHOST,
+        port: PGPORT,
+        username: PGUSER,
+        password: PGPASSWORD,
+        pool: {
+          max: 3,
+          min: 1,
+          idle: 10000,
+        },
+        dialectOptions: {
+          ssl: {
+            require: true,
+            // Ref.: https://github.com/brianc/node-postgres/issues/2009
+            rejectUnauthorized: false,
+          },
+          keepAlive: true,
+        },
+        ssl: true,
+      })
     : new Sequelize(
-        `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/dogs`,
+        `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}`,
         { logging: false, native: false }
       );
 
