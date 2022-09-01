@@ -4,7 +4,7 @@ const fs = require('fs');
 const fetch = require('node-fetch')
 const path = require('path');
 const {
-  PGUSER, PGPASSWORD, PGHOST, PGPORT, PGDATABASE
+  PGUSER, PGPASSWORD, PGHOST, PGPORT, PGDATABASE, DATABASE_URL
 } = process.env;
 
 let sequelize =
