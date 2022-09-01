@@ -9,7 +9,7 @@ const {
 
 let sequelize =
   process.env.NODE_ENV === "production"
-    ? new Sequelize(process.env.DATABASE_URL)
+    ? new Sequelize(`${process.env.DATABASE_URL}`)
     : new Sequelize(
         `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}`,
         { logging: false, native: false }
