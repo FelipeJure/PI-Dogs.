@@ -5,7 +5,7 @@ const fetch = require('node-fetch')
 const path = require('path');
 const {
   // variables de Railway
-  PGUSER, PGPASSWORD, PGHOST, PGDATABASE,
+  PGUSER, PGPASSWORD, PGHOST, PGDATABASE,DB_NAME,
   // variables de Heroku
   DB_USER, DB_PASSWORD, DB_HOST
 } = process.env;
