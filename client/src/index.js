@@ -13,7 +13,7 @@ dotenv.config()
 //chau heroku
 
 axios.defaults.baseURL = process.env.REACT_APP_API || 'http://localhost:3001'
-
+console.log(process.env.REACT_APP_API)
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
