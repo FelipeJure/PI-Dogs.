@@ -7,18 +7,21 @@ const {
   // variables de Railway
   PGUSER, PGPASSWORD, PGHOST, PGDATABASE,DB_NAME,
   // variables de Heroku
-  DB_USER, DB_PASSWORD, DB_HOST
+  DB_USER, DB_PASSWORD, DB_HOST,
+  // variables de Render
+  PRODUCTION_URL
 } = process.env;
 
 let sequelize =
   process.env.NODE_ENV === "production"
-  // en Railway
-    // ? new Sequelize(`${process.env.DATABASE_URL}`)
-    // : new Sequelize(
-    //     `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}`,
-    //     { logging: false, native: false }
-      // );
-// en heroku
+  // RENDER
+    ? new Sequelize(`${PRODUCTION_URL}`)
+    : new Sequelize(
+        `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}`,
+        { logging: false, native: false }
+      );
+// HEROKU
+  /*
   ? 
     new Sequelize({
       database: DB_NAME,
@@ -42,11 +45,12 @@ let sequelize =
       },
       ssl: true,
     })
-  : 
+    : 
     new Sequelize(
       `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}`,
       { logging: false, native: false }
     );
+    */
 
 // const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/dogs`, {
 //   logging: false, // set to console.log to see the raw SQL queries
