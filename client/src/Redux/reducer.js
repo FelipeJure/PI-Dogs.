@@ -10,7 +10,8 @@ import {
     POST_DOG,
     DELETE_DOG,
     EDIT_DOG,
-    ORDER_BY_HEIGHT
+    ORDER_BY_HEIGHT,
+    SET_LOADING
 } from "./actions";
 
 const initialState = {
@@ -18,10 +19,16 @@ const initialState = {
     alwaysAllDogs:[],
     temperaments:[],
     specificTemperaments:null,
+    loading: false
 };
 
 export default function rootReducer (state = initialState, action){
     switch (action.type) {
+        case SET_LOADING:
+            return {
+                ...state,
+                loading: action.payload
+            }
         case GET_ALL_DOGS:
             return {
                 ...state,
@@ -63,6 +70,7 @@ export default function rootReducer (state = initialState, action){
             return{
                 ...state,
                 allDogs:filteredDogs,
+                loading: false
             }
         case FILTER_BY_BREED:
             const dogs = state.alwaysAllDogs;
@@ -70,6 +78,7 @@ export default function rootReducer (state = initialState, action){
             return{
                 ...state,
                 allDogs:filteredDog,
+                loading: false
             }
         case FILTER_BY_ORIGIN:
             let origin
@@ -97,7 +106,8 @@ export default function rootReducer (state = initialState, action){
                 ...state,
                 allDogs:origin,
                 alwaysAllDogs: origin,
-                specificTemperaments: originTemperaments
+                specificTemperaments: originTemperaments,
+                loading: false
             }
         case ORDER_BY_NAME:
             let orderDogs = action.payload==='A-Z'? state.allDogs.sort((a,b) => {

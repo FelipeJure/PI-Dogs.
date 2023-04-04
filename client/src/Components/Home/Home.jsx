@@ -10,6 +10,7 @@ import SearchBar from "./SearchBar/SearchBar";
 
 export default function Home() {
   let allDogs = useSelector((state) => state.allDogs);
+  const loading = useSelector((state) => state.loading);
   const temperaments = useSelector((state) => state.temperaments);
   const specificTemperaments = useSelector(
     (state) => state.specificTemperaments
@@ -100,17 +101,35 @@ export default function Home() {
       <button onClick={handleShowFilters} className={s.burguerButton}>
         <span className={s.burguerForm}></span>
       </button>
-      {allDogs.length ? (
-        <Pagination
-          dogsPerPage={page.dogsPerPage}
-          currentPage={page.currentPage}
-          setmaxPageNumberLimit={setmaxPageNumberLimit}
-          maxPageNumberLimit={maxPageNumberLimit}
-          setminPageNumberLimit={setminPageNumberLimit}
-          minPageNumberLimit={minPageNumberLimit}
-          allDogs={allDogs.length}
-          paginado={paginado}
-        />
+      {allDogs.length && !loading ? (
+        <>
+          <Pagination
+            dogsPerPage={page.dogsPerPage}
+            currentPage={page.currentPage}
+            setmaxPageNumberLimit={setmaxPageNumberLimit}
+            maxPageNumberLimit={maxPageNumberLimit}
+            setminPageNumberLimit={setminPageNumberLimit}
+            minPageNumberLimit={minPageNumberLimit}
+            allDogs={allDogs.length}
+            paginado={paginado}
+          />
+          <div className={s.container}>
+          {currentDogs?.map((dog) => {
+            return (
+              <Card
+                name={dog.name}
+                key={dog.id}
+                id={dog.id}
+                image={dog.image}
+                temperament={dog.temperament}
+                life_span={dog.life_span}
+                weight={dog.weight}
+                height={dog.height}
+              />
+            );
+          })}
+        </div>
+      </>
       ) : (
         <div className="sweet-loading">
           <PropagateLoader
@@ -121,22 +140,6 @@ export default function Home() {
           />
         </div>
       )}
-      <div className={s.container}>
-        {currentDogs?.map((dog) => {
-          return (
-            <Card
-              name={dog.name}
-              key={dog.id}
-              id={dog.id}
-              image={dog.image}
-              temperament={dog.temperament}
-              life_span={dog.life_span}
-              weight={dog.weight}
-              height={dog.height}
-            />
-          );
-        })}
-      </div>
     </div>
   );
 }

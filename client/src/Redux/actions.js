@@ -11,6 +11,14 @@ export const POST_DOG = 'POST_DOG';
 export const DELETE_DOG = 'DELETE_DOG';
 export const EDIT_DOG = 'EDIT_DOG';
 export const ORDER_BY_HEIGHT = 'ORDER_BY_HEIGHT';
+export const SET_LOADING = 'SET_LOADING';
+
+export function setLoading () {
+    return {
+        type: SET_LOADING,
+        payload: true
+    }
+}
 
 export function orderByHeight (height) {
     return {

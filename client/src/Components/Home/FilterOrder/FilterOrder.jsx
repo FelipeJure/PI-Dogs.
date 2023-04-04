@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterByTemperament, filterByBreed, filterByOrigin, orderByName, orderByWeight, orderByHeight } from "../../../Redux/actions";
+import { setLoading, filterByTemperament, filterByBreed, filterByOrigin, orderByName, orderByWeight, orderByHeight } from "../../../Redux/actions";
 import s from './FilterOrder.module.css';
 
 export default function Filter_Order ({temperaments, resetPagination, select, setSelect}) {
@@ -10,9 +10,18 @@ export default function Filter_Order ({temperaments, resetPagination, select, se
     const handleChange = e =>{
         if(e.target.name === 'orderName') dispatch(orderByName(e.target.value))
         if(e.target.name === 'weight') dispatch(orderByWeight(e.target.value))
-        if(e.target.name === 'temperament') dispatch(filterByTemperament(e.target.value))
-        if(e.target.name === 'breed') dispatch(filterByBreed(e.target.value))
-        if(e.target.name === 'origin') dispatch(filterByOrigin(e.target.value))
+        if(e.target.name === 'temperament') {
+            dispatch(setLoading())
+            dispatch(filterByTemperament(e.target.value))
+        }
+        if(e.target.name === 'breed') {
+            dispatch(setLoading())
+            dispatch(filterByBreed(e.target.value))
+        }
+        if(e.target.name === 'origin') {
+            dispatch(setLoading())
+            dispatch(filterByOrigin(e.target.value))
+        }
         if(e.target.name === 'height') dispatch(orderByHeight(e.target.value))
         resetPagination()
         setSelect({...select, [e.target.name]: e.target.value})
