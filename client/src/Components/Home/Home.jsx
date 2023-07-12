@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Card from "../Card/Card";
 import { getAllDogs, getTemperaments } from "../../Redux/actions";
-import PropagateLoader from "react-spinners/PropagateLoader";
 import s from "./Home.module.css";
 import Pagination from "./Pagination/Pagination";
 import FilterOrder from "./FilterOrder/FilterOrder";
 import SearchBar from "./SearchBar/SearchBar";
+import { Loading } from "./Loading";
 
 export default function Home() {
   let allDogs = useSelector((state) => state.allDogs);
@@ -35,7 +35,7 @@ export default function Home() {
     dispatch(getAllDogs());
     dispatch(getTemperaments());
     resetPagination();
-  }, []);
+  }, []); 
   if (allDogs.message) {
     setTimeout(() => {
       dispatch(getAllDogs());
@@ -75,12 +75,7 @@ export default function Home() {
     });
   };
 
-  const override = {
-    display: "block",
-    paddingTop: "40vh",
-    paddingLeft: "50%",
-    borderColor: "black",
-  };
+
 
   return (
     <div>
@@ -131,14 +126,7 @@ export default function Home() {
         </div>
       </>
       ) : (
-        <div className="sweet-loading">
-          <PropagateLoader
-            color="black"
-            loading={true}
-            cssOverride={override}
-            size={20}
-          />
-        </div>
+        <Loading/>
       )}
     </div>
   );

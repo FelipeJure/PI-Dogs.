@@ -1,0 +1,29 @@
+.loader{
+    display: flex;
+    margin-top: 30vh;
+    margin-inline: auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+
+.textLoader, .subTextLoader{
+    color: black;
+}
+
+.textLoader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-size: larger;
+    font-weight: 600;
+}
+
+.subTextLoader{
+    padding-inline: 0.5rem;
+    font-weight: 400;
+    text-align: center;
+    font-size: initial;
+}
