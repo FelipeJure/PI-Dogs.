@@ -2,14 +2,19 @@ const { Dog, Temperament } = require("../../src/db.js");
 const { Router } = require("express");
 const router = Router();
 const fetch = require("node-fetch");
-const { text } = require("body-parser");
-const { Op } = require("sequelize");
+const { API_KEY } = process.env
 
 const callApiDogs = async () => {
   try {
-    let dogs = await fetch("https://api.thedogapi.com/v1/breeds");
+    let dogs = await fetch("https://api.thedogapi.com/v1/breeds", {
+      headers: {
+        'x-api-key': API_KEY
+      }
+    });
     dogs = await dogs.json();
+
     dogs = dogs.map((dog) => {
+
       return (dog = {
         image: dog.image.url,
         name: dog.name,

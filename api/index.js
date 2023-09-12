@@ -21,9 +21,15 @@ const fetch = require('node-fetch');
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const { Temperament } = require('./src/db.js');
+const { API_KEY } = process.env
+
 
 const addToDb = async () => {
-      let dogs = await fetch('https://api.thedogapi.com/v1/breeds')
+      let dogs = await fetch('https://api.thedogapi.com/v1/breeds', {
+        headers: {
+          'x-api-key': API_KEY
+        }
+      })
       dogs = await dogs.json()
       let temperaments = []
       dogs.forEach(curr => {

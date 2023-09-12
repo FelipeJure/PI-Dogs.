@@ -13,6 +13,7 @@ dotenv.config()
 //chau heroku
 
 axios.defaults.baseURL = process.env.REACT_APP_API || 'http://localhost:3001'
+const REACT_APP_API= 'https://dogsapp-tjpv.onrender.com'
 
 ReactDOM.render(
   <Provider store={store}>
